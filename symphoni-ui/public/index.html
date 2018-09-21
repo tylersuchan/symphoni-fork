@@ -13,6 +13,9 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -22,6 +25,11 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+  <style>
+    .border {
+      border: 1px solid black;
+    }
+  </style>
   <title>Symphoni</title>
 </head>
 
@@ -32,21 +40,49 @@
 
   <div id="root">
 
-    <h1 class="center"><i>Symphoni</i></h1>
-    <h5 class="center">the party starts here</h5>
-    <h3>
-      <a class="waves-effect waves-light btn-large" href=#join>Join the Party</a>
-      <a class="waves-effect waves-light btn-large">Start Party!</a>
-    </h3>
+    <h1 class="center">
+      <i>symphoni</i>
+    </h1>
 
-    <a href="#JOIN"></a>
-    <div class="container" id="join">
-      <div class="center">
-        <h4 class="black-text ">Please Enter Room Code</h4>
-        <h1 class="blue-text "> _ _ _ _ _ _ </h1>
-      </div>
+    <h5 class="center">
+      <a class="black-text">
+        <b> the party starts here </b>
+      </a>
+    </h5>
+    <h3 class="center">
+      <a class="waves-effect waves-light btn-large z-depth-3" href=#start>Start Party!</a>
+      <a class=" waves-effect waves-light btn-large z-depth-3 " href=#join>Join the Party</a>
+    </h3>
+    <!-- <a href="#start "></a>
+      <div class="container " id="join ">
+        <div class="center ">
+          <h4 class="black-text ">Start Party Here</h4>
+        </div>
+      </div> -->
+
+
+    <div class="border center">
+      <h3>Start Party Here!</h3>
+      <h5 class="black-text">Insert Party Here</h5>
     </div>
-    
+
+
+
+    <div class="border center">
+      <h3>Please Enter Room Code:</h3>
+      <h2 class="black-text bold">_ _ _ _ _ _</h2>
+    </div>
+
+
+
+    <!-- <a href=" #join "></a>
+  <div class="container " id="join ">
+    <div class="center ">
+      <h4 class="black-text ">Please Enter Room Code</h4>
+      <h1 class="blue-text "> _ _ _ _ _ _ </h1>
+    </div>
+  </div> -->
+
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
