@@ -16,6 +16,8 @@
   <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 
+  <link rel="stylesheet" type="symphoni/symphoni-ui/src/index.css">
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -26,10 +28,13 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <style>
+
     .border {
       border: 1px solid black;
     }
+
   </style>
+
   <title>Symphoni</title>
 </head>
 
@@ -55,16 +60,25 @@
       <a class="waves-effect waves-light btn-large z-depth-3" href="#start" id= "start-button">Start Party!</a>
       <a class=" waves-effect waves-light btn-large z-depth-3 " href="#join" id= "join-button">Join Party</a>
     </h3>
-    
+
     <!-- START PARTY CONTAINER -->
     <div class="border container z-depth-1" id="start">
       <div class="row">
         <div class="center" id="start-party">
           <h3> Start Party Here!</h3>
-          <h5> Insert Party Here</h5>
+          <h5> Insert Party Name</h5>
         </div>
+        <div style="center" class="center-align">
+        <form class="col s12">
+            <div class="input-field col s6">
+                <i class="material-icons prefix">music_note</i>
+                <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                <label for="icon_prefix2">Party Name</label>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-    </div>
 
     <!-- JOIN PARTY CONTAINER -->
     <div class="border container z-depth-1" id="join">
