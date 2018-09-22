@@ -13,10 +13,6 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-  <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
-
-  <link rel="stylesheet" type="symphoni/symphoni-ui/src/index.css">
 
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
@@ -27,13 +23,6 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  <style>
-
-    .border {
-      border: 1px solid black;
-    }
-
-  </style>
 
   <title>Symphoni</title>
 </head>
@@ -49,16 +38,12 @@
       <i>symphoni</i>
     </h1>
 
-    <h5 class="center">
-      <a class="black-text">
-        <b> the party starts here </b>
-      </a>
-    </h5>
+    <h5 class="center"> the party starts here </h5>
 
     <!-- BUTTONS -->
     <h3 class="center">
-      <a class="waves-effect waves-light btn-large z-depth-3" href="#start" id= "start-button">Start Party!</a>
-      <a class=" waves-effect waves-light btn-large z-depth-3 " href="#join" id= "join-button">Join Party</a>
+      <a class="waves-effect waves-light btn-large z-depth-3" href="#start" id="start-button">Start Party!</a>
+      <a class=" waves-effect waves-light btn-large z-depth-3 " href="#join" id="join-button">Join Party</a>
     </h3>
 
     <!-- START PARTY CONTAINER -->
@@ -68,17 +53,15 @@
           <h3> Start Party Here!</h3>
           <h5> Insert Party Name</h5>
         </div>
-        <div style="center" class="center-align">
-        <form class="col s12">
-            <div class="input-field col s6">
-                <i class="material-icons prefix">music_note</i>
-                <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-                <label for="icon_prefix2">Party Name</label>
-              </div>
-            </div>
+        <div class="flex-container mv-s">
+          <div class="flex-horizontal-center input-field col s6">
+            <i class="material-icons prefix">music_note</i>
+            <input id="join-code" type="text"></input>
+            <label for="join-code">Party Name</label>
           </div>
-        </form>
+        </div>
       </div>
+    </div>
 
     <!-- JOIN PARTY CONTAINER -->
     <div class="border container z-depth-1" id="join">
@@ -91,7 +74,7 @@
     </div>
   </div>
 
-    <!--
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -101,8 +84,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-    <script type="text/javascript " src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js "></script>
+  <script type="text/javascript " src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js "></script>
 </body>
 
 </html>
