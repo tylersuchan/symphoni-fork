@@ -1,12 +1,15 @@
 import unittest
+from os import path, getcwd
+from driver_picker import DriverPicker
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
 class startButtonTests(unittest.TestCase):
+        
     def setUp(self):
-        self.GoogleDriver = webdriver.Chrome("C:\\Users\\Ohad\\symphoni\\symphoni-ui\\Tests\\chromedriver.exe")
-        self.GoogleDriver.get("C:\\Users\\Ohad\\symphoni\\symphoni-ui\\public\\index.html")
+        self.GoogleDriver = webdriver.Chrome(DriverPicker().driver_version)
+        self.GoogleDriver.get("file://" + path.join(getcwd(), 'public', 'index.html'))
 
     def test_start_exists(self):
         driver = self.GoogleDriver
