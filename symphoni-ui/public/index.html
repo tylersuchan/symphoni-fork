@@ -13,6 +13,7 @@
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
   <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -22,6 +23,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+
   <title>Symphoni</title>
 </head>
 
@@ -29,10 +31,49 @@
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
+
   <div id="root">
-    <h1 class="center"><i>Symphoni</i></h1>
-    <h5 class="center">the party starts here</h5>
+
+    <h1 class="center">
+      <i>symphoni</i>
+    </h1>
+
+    <h5 class="center"> the party starts here </h5>
+
+    <!-- BUTTONS -->
+    <h3 class="center">
+      <a class="waves-effect waves-light btn-large z-depth-3" href="#start" id="start-button">Start Party!</a>
+      <a class=" waves-effect waves-light btn-large z-depth-3 " href="#join" id="join-button">Join Party</a>
+    </h3>
+
+    <!-- START PARTY CONTAINER -->
+    <div class="border container z-depth-1" id="start">
+      <div class="row">
+        <div class="center" id="start-party">
+          <h3> Start Party Here!</h3>
+          <h5> Insert Party Name</h5>
+        </div>
+        <div class="flex-container mv-s">
+          <div class="flex-horizontal-center input-field col s6">
+            <i class="material-icons prefix">music_note</i>
+            <input id="join-code" type="text"></input>
+            <label for="join-code">Party Name</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOIN PARTY CONTAINER -->
+    <div class="border container z-depth-1" id="join">
+      <div class="row">
+        <div class="center" id="join-party">
+          <h3> Enter Room Code: </h3>
+          <h2> _ _ _ _ _ _ </h2>
+        </div>
+      </div>
+    </div>
   </div>
+
   <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -43,8 +84,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script type="text/javascript " src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js "></script>
 </body>
 
 </html>
