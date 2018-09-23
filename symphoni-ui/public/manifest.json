@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Symphoni UI",
+  "name": "User Interface for Symphoni Web App",
   "icons": [
     {
       "src": "favicon.ico",
