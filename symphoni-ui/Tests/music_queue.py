@@ -5,7 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-class QueueTest(unittest.TestCase):
+class MusicQueueTest(unittest.TestCase):
     def setUp(self):
         self.GoogleDriver = webdriver.Chrome(DriverPicker().driver_version)
         self.GoogleDriver.get("file://" + path.join(getcwd(), 'public', 'index.html'))
