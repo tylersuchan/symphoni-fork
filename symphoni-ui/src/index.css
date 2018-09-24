@@ -1,3 +1,12 @@
+tml {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -9,14 +18,34 @@ html {
   height: 100%;
 }
 
+img {
+  width: 3em;
+  height: 3em;
+}
+
 .border {
   border: 1px solid black;
 }
 
 .flex-container {
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  overflow: hidden;
 }
 
 .flex-horizontal-center {
   margin: 0 auto;
+}
+
+.max-height {
+  height: 100% !important;
+}
+
+.max-width {
+  width: 100%;
+}
+
+.queue-entry {
+  height: 48px;
 }

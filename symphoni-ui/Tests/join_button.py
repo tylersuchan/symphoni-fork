@@ -16,14 +16,11 @@ class JoinButtonTest(unittest.TestCase):
     
     def test_check_button(self):
         driver = self.GoogleDriver
-        driver.implicitly_wait(1)
         assert driver.find_element_by_id("join") != None
     
     def test_anchor(self):
         driver = self.GoogleDriver
-        driver.implicitly_wait(1)
         driver.find_element_by_id("join-button").click()
-        driver.implicitly_wait(1)
         assert '#join' in driver.current_url
    
     def tearDown(self):

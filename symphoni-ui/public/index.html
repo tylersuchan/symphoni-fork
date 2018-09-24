@@ -5,24 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="theme-color" content="#000000">
-  <!--
-      manifest.json provides metadata used when your web app is added to the
-      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-    -->
+
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
   <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-
-  <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
 
   <title>Symphoni</title>
 </head>
@@ -72,18 +59,38 @@
         </div>
       </div>
     </div>
+
+    <!-- QUEUE CONTAINER -->
+    <div class="container border z-depth-1">
+      <h3 class="ml-xs">Your Playlist:</h3><br>
+      <div class="row mt-xxs mb-0">
+        <div class="offset-s2 col s10">
+          <div class="col s4"><b>Title</b></div>
+          <div class="col s4"><b>Artist</b></div>
+          <div class="col s4"><b>Album</b></div>
+        </div>
+      </div>
+      <hr>
+      <div class="row queue-entry">
+        <div class="col s2"><img class="responsive-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/1/18/Kids_See_Ghost_Cover.jpg/220px-Kids_See_Ghost_Cover.jpg"></div>
+        <div class="col s10 max-height valign-wrapper">
+          <div class="col s4">4th Dimension</div>
+          <div class="col s4">Kanye West</div>
+          <div class="col s4">Kids See Ghosts</div>
+        </div>
+      </div>
+      <div class="row queue-entry">
+        <div class="col s2"><img class="responsive-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/9/90/Scorpion_by_Drake.jpg/220px-Scorpion_by_Drake.jpg"></div>
+        <div class="col s10 max-height valign-wrapper">
+          <div class="col s4">Nonstop</div>
+          <div class="col s4">Drake</div>
+          <div class="col s4">Scorpion</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   <script type="text/javascript " src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js "></script>
 </body>
