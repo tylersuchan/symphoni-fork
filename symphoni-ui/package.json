@@ -6,6 +6,7 @@
     "css-spaces": "^0.3.5",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0-rc.2",
+    "prop-types": "^15.6.2",
     "react": "^16.5.1",
     "react-dom": "^16.5.1",
     "react-scripts": "1.1.5"
