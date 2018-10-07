@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 import PropTypes from 'prop-types';
 
-const Container = (props) => {
-  Container.propTypes = {
-    children: PropTypes.node.isRequired,
-  };
+const $ = window.$;
 
-  const { children } = props;
-  return (
-    <div className="container" id="start">
-      <div className="row">
-        {' '}
-        {children}
-        {' '}
+class Container extends Component {
+  componentDidMount() {
+    $('.scrollspy').scrollSpy();
+  }
+
+  render() {
+    const { children } = this.props;
+    return (
+      <div className="container scrollspy" id="start">
+        <div className="row">
+          {' '}
+          {children}
+          {' '}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+}
+Container.propTypes = {
+  children: PropTypes.node.isRequired,
 };
-
 export default Container;
