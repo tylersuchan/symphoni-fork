@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/corwynnielsen/Documents/classes/cse_442/symphoni/env"
+VIRTUAL_ENV="/home/ross/CSE442/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
