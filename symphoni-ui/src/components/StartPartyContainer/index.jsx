@@ -3,7 +3,7 @@ import './StartPartyContainer.css';
 import Container from '../Util/Container';
 
 const StartPartyContainer = () => (
-  <Container>
+  <Container id="start">
     <div className="center" id="start-party">
       <h3> Start Party Here!</h3>
       <h5> Insert Party Name</h5>

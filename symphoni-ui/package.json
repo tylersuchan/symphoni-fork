@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "bower": "^1.8.4",
     "css-spaces": "^0.3.5",
     "material-design-icons": "^3.0.1",
     "materialize-css": "^1.0.0-rc.2",
