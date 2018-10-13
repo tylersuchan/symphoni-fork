@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
+import QueueContainer from '../QueueContainer';
 
 class App extends Component {
   render() {
@@ -8,6 +9,7 @@ class App extends Component {
       <div>
         <HomeContainer />
         <StartPartyContainer />
+        <QueueContainer />
       </div>
     );
   }
