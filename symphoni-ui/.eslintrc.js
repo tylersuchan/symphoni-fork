@@ -1,7 +1,7 @@
 module.exports = {
   extends: 'airbnb',
   parser: 'babel-eslint',
-  env: { jquery: true, es6: true },
+  env: { jquery: true, es6: true, browser: true, commonjs: true },
   rules: {
     'jsx-a11y/label-has-associated-control': [
       'error',

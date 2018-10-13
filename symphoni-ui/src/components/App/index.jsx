@@ -3,11 +3,22 @@ import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { partyCode: '' };
+  }
+
+  changePartyCode = (newPartyCode) => {
+    console.log(newPartyCode);
+    this.setState({ partyCode: newPartyCode });
+  };
+
   render() {
     return (
       <div>
         <HomeContainer />
-        <StartPartyContainer />
+        <StartPartyContainer partyCode={this.changePartyCode} />
+        <p>{this.state.partyCode}</p>
       </div>
     );
   }
