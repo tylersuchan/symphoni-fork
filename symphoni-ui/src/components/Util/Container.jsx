@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 
-const $ = window.$;
-
+const { $ } = window;
 class Container extends Component {
   componentDidMount() {
     $('.scrollspy').scrollSpy();
