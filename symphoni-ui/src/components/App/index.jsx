@@ -9,7 +9,6 @@ class App extends Component {
   }
 
   changePartyCode = (newPartyCode) => {
-    console.log(newPartyCode);
     this.setState({ partyCode: newPartyCode });
   };
 

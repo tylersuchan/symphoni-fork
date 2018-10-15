@@ -1,7 +1,7 @@
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+symphoni-ui/node_modules
 
 # testing
 /coverage
@@ -9,13 +9,20 @@
 # production
 /build
 
+# configurationgit status
+/symphoni-ui/src/config.js
+
 # misc
 .DS_Store
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 __pycache__
 
 npm-debug.log*
