@@ -8,7 +8,13 @@ const JoinPartyContainer = () => (
       <div className="row">
         <div className="center" id="join">
           <h3> Enter Room Code: </h3>
-          <h2> _ _ _ _ _ _ </h2>
+          <div className="flex-container">
+            <div className="flex-horizontal-center input-field col s6">
+              {' '}
+              <input id="join-code" type="text" data-length="6" maxLength="6" />
+              <label htmlFor="join-code">Room Code</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
