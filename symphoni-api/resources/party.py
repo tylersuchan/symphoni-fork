@@ -13,10 +13,19 @@ class Party(Resource):
         return retval,200 
 
     def put(self, name):
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('access_token')
+        try:
+            args = parser.parse_args(strict=True)
+            if args['access_token'] is None or args['access_token'] is "":
+                raise Exception('Input is None') 
+        except:
+            return {"message": "Invalid Input"},400
+
         code = ''.join(random.choices(
             string.ascii_uppercase + string.digits, k=6))
-        retval = {'code': code, 'name': name}
-        persistence.db[code] = { 'name': name, 'playlist' : [] }
+        persistence.db[code] = { 'name': name, 'playlist' : [], 'access_token': args['access_token'] }
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 201
 
