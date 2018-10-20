@@ -2,44 +2,47 @@ import React from 'react';
 import './FooterComponent.css';
 import Container from '../Util/Container';
 
+
 const FooterComponent = () => (
   
   <Container>
+  
+  <div>
+  
+  <ul class="collapsible">
+    <li>
+      <div class="collapsible-header"><i class="material-icons">people_outline</i>Contact Us!</div>
+      <div class="collapsible-body"><span>
+                                    Tyler Suchan - tylersuc@buffalo.edu <br />
+                                    Ohad Katz - ohadkatz@buffalo.edu <br />
+                                    Ross Ventresca - rossvent@buffalo.edu <br />
+                                    Corwyn Nielsen - corwynni@buffalo.edu <br />
+                                    Vincent Bruno - vnbruno@buffalo.edu <br />
+                                   </span></div>
+      
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">screen_lock_landscape</i>Privacy Policy</div>
+      <div class="collapsible-body"><span>
+                                    We honestly don't collect any information ourselves, but we inegrate with Spotify
+                                    on an authentication level and <b>they collect information</b> not us. To review
+                                    what they collect please visit their <a href="https://www.spotify.com/us/legal/privacy-policy/">Privacy Policy</a>
+                                    </span></div>
+    </li>
+    <li>
+      <div class="collapsible-header"><i class="material-icons">headset</i>About Us!</div>
+      <div class="collapsible-body"><span>
+                                   Symphoni's goal is to create a democratic way for people to throw ragers.
+                                   We provide a way to democratize the way you listen to music. You can create party rooms
+                                   invite your friends and then everyone can requests songs they want to hear and vote what
+                                   song comes up next. If you have any questions please visit the <b>Contact Us</b> above.
+                                  </span></div>
+    </li>
+  </ul>
+  
+  
+  </div>      
     
-    <footer class="page-footer grey lighten-3">
-      <div class="container" id="privacy">
-        <div class="row">
-          <div class="col 16 s12">
-            <div id="Privacy Policy">
-              <h5 class="black-text">Privacy Policy</h5>
-              <p class="black-text"> 
-                <a href="priv.html">Privacy Policy</a>    
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container" id="contactus">
-        <div class="row">
-          <div class="col 16 s12">
-            <div id="Contact Us">
-              <h5 class="black-text">Contact Us</h5>
-              <p class="black-text"> Information about contacting the developers will be placed here in the future </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-copyright">
-        <div class="container">
-          © 2018 Copyright Symphoni
-          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
-      </div>
-    </footer>
-
-
   </Container>
 );
 
