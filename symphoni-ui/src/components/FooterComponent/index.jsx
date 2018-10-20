@@ -1,4 +1,4 @@
-mport React from 'react';
+import React from 'react';
 import './FooterComponent.css';
 import Container from '../Util/Container';
 
