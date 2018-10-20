@@ -10,6 +10,7 @@ class App extends Component {
         <HomeContainer />
         <StartPartyContainer />
         <JoinPartyContainer />
+        <FooterComponent />
       </div>
     );
   }
