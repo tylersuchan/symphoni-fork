@@ -36,7 +36,8 @@ class Playlist(Resource):
         }
 
         persistence.db[code]["playlist"].append(playlist_item)
-
+        newlist = sorted(persistence.db[code]["playlist"],key=lambda k: k["vote"], reverse=True)
+        persistence.db[code]["playlist"] = newlist
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 201
 
@@ -52,13 +53,13 @@ class Playlist(Resource):
         except:
             return {"message": "Invalid Input"},400
 
-        if((args["vote"] != "up") or (args["vote"] != "down")):
+        if(("up" in args["vote"]) and ("down" in args["vote"])):
             return {"message": "Please specify vote (up or down)"},400
 
         found = False
         for item in persistence.db[code]["playlist"]:
             if item["song"]["track_uri"] == args["track_uri"]:
-                item["vote"] = item["vote"]+1 if args["vote"] == "up" else item["vote"]-1 
+                item["vote"] = item["vote"]+1 if "up" in args["vote"] else item["vote"]-1 
                 found = True
                 break
         
@@ -73,13 +74,20 @@ class Playlist(Resource):
     def delete(self,code): 
         if not code in persistence.db:
             return 404
-        
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('track_uri',type=str,required=True)
         try:
-            del persistence.db[code]
+            args = parser.parse_args(strict=True)
         except:
-            return 500
+            return {"message": "Invalid Input"},400
+
+        persistence.db[code]["playlist"][:] = [song for song in persistence.db[code]["playlist"] if song.get("song").get("track_uri") != args["track_uri"]]
         
-        return {"message": "Delete Successful"},200
+        return {'code': code, 'party_data': persistence.db[code]}
 
 
 
+       
+
+ 
