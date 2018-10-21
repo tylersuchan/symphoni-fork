@@ -18,15 +18,14 @@ class UserInput extends Component {
             }
         }  
     }
+
     handlePress = (event) =>{
         // BACKSPACE EVENT- Deletes value(Sets its value back to), then moves focus backward and
         if(event.key === "Backspace"){
             event.preventDefault();
-            this.myTextInput.value=""; 
-            if(this.myTextInput.previousElementSibling){
-                
+            this.myTextInput.value= "";
+            if(this.myTextInput.previousSibling){
                 this.myTextInput.previousSibling.focus(); 
-                this.myTextInput.previousSibling.value="";
             }
         }
 
