@@ -11,21 +11,24 @@ class PartyCodeInput extends Component {
     }
 
     arrayHandler = (i, event) => {
+        event.preventDefault();
         const inputVals = this.state.enterCode.splice();
         inputVals[i] = event.target.value;
-        
+        console.log(inputVals)
         this.setState({enterCode: inputVals});
     }
+
     
     render(){
         return (
             <div>
-                <UserInput idx='0'  value= {this.arrayHandler}/>
-                <UserInput idx='1'  value= {this.arrayHandler}/>
-                <UserInput idx='2'  value= {this.arrayHandler}/>
-                <UserInput idx='3'  value= {this.arrayHandler}/>
-                <UserInput idx='4'  value= {this.arrayHandler}/>
-                <UserInput idx='5'  value= {this.arrayHandler}/>
+                <UserInput idx='0'  onChange={this.arrayHandler} />
+                <UserInput idx='1'  onChange={this.arrayHandler} />
+                <UserInput idx='2'  onChange={this.arrayHandler} />
+                <UserInput idx='3'  onChange={this.arrayHandler} />
+                <UserInput idx='4'  onChange={this.arrayHandler} />
+                <UserInput idx='5'  onChange={this.arrayHandler} />
+                <a className="waves-effect waves-light btn-small"><i className="material-icons">arrow_drop_down</i></a>
             </div>
         );
     }

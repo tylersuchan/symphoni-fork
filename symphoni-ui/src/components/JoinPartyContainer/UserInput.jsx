@@ -5,42 +5,42 @@ class UserInput extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value : null
+            value : "_"
         };
     }
-  
+   
     handleInput = (event) => {
         const {value} = event.target;
+        this.props.onChange(this.props.idx,event);
         if(value.length ===1 || value.length===0){
-            this.setState({value:event.key});
-            
             if(this.myTextInput.nextSibling){
-                this.myTextInput.nextSibling.focus();
+                this.myTextInput.nextSibling.focus();    
             }
         }  
-       
     }
     handlePress = (event) =>{
-        const {value} = event.target;
+        // BACKSPACE EVENT- Deletes value(Sets its value back to), then moves focus backward and
         if(event.key === "Backspace"){
-            
+            event.preventDefault();
+            this.myTextInput.value=""; 
             if(this.myTextInput.previousElementSibling){
-                if(value.length==="1"){
-                    this.myTextInput.value="";
-                }
-                this.setState({value:''});
                 
                 this.myTextInput.previousSibling.focus(); 
-                
+                this.myTextInput.previousSibling.value="";
             }
         }
+
+        //Left arrow key does the same thing as backspace without deletion
         if(event.key === "ArrowLeft"){
+            
             if(this.myTextInput.previousSibling){
-                this.myTextInput.previousSibling.focus(); 
+                event.preventDefault();
+                this.myTextInput.previousSibling.focus();  
             }
         }
-        if(event.key === "Enter" || event.key === "ArrowRight"){
-            
+
+        //Right arrow key just traverses right on the values
+        if(event.key === "ArrowRight"){
             if(this.myTextInput.nextSibling){
                 this.myTextInput.nextSibling.focus(); 
             }
@@ -49,13 +49,16 @@ class UserInput extends Component {
 
 
     render() { 
-        return (  <input ref={(input) =>{
-            this.myTextInput = input;
-        }}
-        onChange = {this.handleInput}
-        onKeyDown = {this.handlePress}
-        placeholder= "_"
-        maxLength="1"/> );
+        return (  
+            <input 
+                ref={(input) =>{ this.myTextInput = input;  }}
+                onChange = {this.handleInput}
+                onKeyDown = {this.handlePress}
+                placeholder = "_"
+                maxLength="1"
+            /> 
+
+        );
     }
 }
 export default UserInput;

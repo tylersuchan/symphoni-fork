@@ -10,29 +10,7 @@ class JoinPartyContainer extends Component {
     this.state = {
       
     };
-<<<<<<< Updated upstream
-  } 
-  
-  class StartPartyContainer extends Component {
-  getPartyCodeOnEnter = (event) => {
-    if (event.key === 'Enter') {
-      const partyURI = `${config.url}party/${event.target.value}`;
-      fetch(partyURI, {
-        method: 'GET',
-      }).then(response => response.json().then((data) => {
-        const { partyCode } = this.props;
-        partyCode(data.code);
-      }));
-    }
-  };
-
-
-=======
-  }  
-  getPartyCodeOnEnter = (event) => {
-
-  };
->>>>>>> Stashed changes
+  }
   render() {
     return (
       <Container id="join">
