@@ -18,6 +18,10 @@ input:focus {
     box-shadow: none !important;
 }
 
+UserInput:focus {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
 
 input::placeholder{
     opacity: 1;

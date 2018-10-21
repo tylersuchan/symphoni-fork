@@ -10,6 +10,7 @@ class JoinPartyContainer extends Component {
     this.state = {
       
     };
+<<<<<<< Updated upstream
   } 
   
   class StartPartyContainer extends Component {
@@ -26,6 +27,12 @@ class JoinPartyContainer extends Component {
   };
 
 
+=======
+  }  
+  getPartyCodeOnEnter = (event) => {
+
+  };
+>>>>>>> Stashed changes
   render() {
     return (
       <Container id="join">
