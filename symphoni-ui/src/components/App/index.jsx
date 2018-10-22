@@ -9,29 +9,25 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      partycode : ''
+      partyCode: '',
+      partyName: '',
+      deviceID: null,
     };
   }
 
-  changePartyCode = (newPartyCode) => {
-    this.setState({partycode : newPartyCode});
-  };
-
   render() {
-    console.log(window);
+    const { partyName, partyCode } = this.state;
+
     return (
       <div>
         <HomeContainer />
-
-        <StartPartyContainer partycode={this.changePartyCode} />
-        <p>{this.state.partycode}</p>
+        <StartPartyContainer
+          setPartyCode={newPartyCode => this.setState({ partyCode: newPartyCode })}
+          setPartyName={newPartyName => this.setState({ partyName: newPartyName })}
+        />
         <JoinPartyContainer />
+        <QueueContainer code={partyCode} partyName={partyName} />
         <FooterComponent />
-
-        <StartPartyContainer partyCode={this.changePartyCode} />
-        <p>{this.state.partyCode}</p>
-        
-
       </div>
     );
   }

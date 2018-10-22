@@ -39,7 +39,12 @@ class StartPartyContainer extends Component {
 
 
 StartPartyContainer.propTypes = {
+<<<<<<< HEAD
+  setPartyCode: PropTypes.func.isRequired,
+  setPartyName: PropTypes.func.isRequired,
+=======
   partyCode: PropTypes.func.isRequired,
+>>>>>>> f399c6dc70f343d901d908d6c790bb94ca03883f
 };
 
 export default StartPartyContainer;

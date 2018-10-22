@@ -14,9 +14,7 @@ class Container extends Component {
     return (
       <div className="container scrollspy" id={id}>
         <div className="row">
-          {' '}
           {children}
-          {' '}
         </div>
       </div>
     );
