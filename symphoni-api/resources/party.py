@@ -14,19 +14,10 @@ class Party(Resource):
 
     def put(self, name):
 
-        #parser = reqparse.RequestParser()
-        #parser.add_argument('access_token',type=str, location='json', required=True)
-        #parser.add_argument('expires_in',type=int, location='json', required=True)
-        #parser.add_argument('refresh_token',type=str, location='json', required=True)
-        #try:
-        #   args = parser.parse_args(strict=True)
-        #except:
-        #    return {"message": "Invalid Input"},400
-
         code = ''.join(random.choices(
             string.ascii_uppercase + string.digits, k=6))
 
-        persistence.db[code] = { 'name': name, 'playlist' : []}#, 'oauth_token': args}
+        persistence.db[code] = { 'name': name, 'playlist' : [], 'spotify_token_details': {}}
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 201
 
