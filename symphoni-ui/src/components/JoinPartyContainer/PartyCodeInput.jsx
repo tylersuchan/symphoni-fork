@@ -1,47 +1,52 @@
 import React, {Component} from 'react';
 import UserInput from './UserInput';
-
+import config from '../../config';
 class PartyCodeInput extends Component {
     constructor(props){
         super(props);
         this.state={
-            enterCode : Array(6),
+            userCode : Array(6),
         }
-    }
-    handleInput = (i, event) => {
-        event.preventDefault();
-        const inputVals = this.state.enterCode.splice();
-        inputVals[i] = event.target.value;
-        console.log(inputVals);
-        this.setState({enterCode: inputVals});
         
     }
-   
-    // componentDidMount(){
-    //     for(let x in this.refs){
-    //         this.refs[x].onChange = (e) =>
-    //             this.handleFocus(e, this.refs[x])
-    //     }
-    //     this.refs.name.focus();
-    // }
+    
+    checkCode = (event) => {
+        event.preventDefault();
+        const {userCode} = this.state;
+        //localhost::3000/party/"ARRAY"
+        const partyURI = `${config.url}party/${userCode.join("")}`;
+        fetch(partyURI, {
+            method: 'GET',
+        }).then(response => response.json().then((data)=>{
+            const {partyCode} = this.props;
+            if(data.code){
+                this.props.changeFoundStatus(true);
+            }
+            else{
+                this.props.changeFoundStatus(false);
+            }
+        }));
+    }
 
-    // handleFocus(e , field){
-    //     e.preventDefault();
-    //     let next = this.refs[field.name].nextSibling;
-    //     if(next && next.tagName ==="INPUT"){
-    //         this.refs[field.name].nextSibling.focus()
-    //     }
-    // }
+    arrayHandler = (i, event) => {
+        event.preventDefault();
+        const inputVals = this.state.userCode.splice();
+        inputVals[i] = event.target.value;
+        console.log(inputVals)
+        this.setState({userCode: inputVals});
+    }
 
+    
     render(){
         return (
             <div>
-                <UserInput idx='0' onChange={this.handleInput} />
-                <UserInput idx='1' onChange={this.handleInput} />
-                <UserInput idx='2' onChange={this.handleInput} />
-                <UserInput idx='3' onChange={this.handleInput} />
-                <UserInput idx='4' onChange={this.handleInput} />
-                <UserInput idx='5' onChange={this.handleInput} />
+                <UserInput idx='0'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='1'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='2'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='3'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='4'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='5'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <a className="waves-effect waves-light btn-small" onClick={this.checkCode}><i className="material-icons">arrow_drop_down</i></a>
             </div>
         );
     }

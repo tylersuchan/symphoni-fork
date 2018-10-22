@@ -6,21 +6,25 @@ import FooterComponent from '../FooterComponent';
 import QueueContainer from '../QueueContainer';
 
 class App extends Component {
-  constructor(props) {
+  constructor(props){
     super(props);
-    this.state = { partyCode: '' };
+    this.state = {
+      partycode : ''
+    };
   }
 
   changePartyCode = (newPartyCode) => {
-    this.setState({ partyCode: newPartyCode });
+    this.setState({partycode : newPartyCode});
   };
 
   render() {
+    console.log(window);
     return (
       <div>
         <HomeContainer />
 
-        <StartPartyContainer />
+        <StartPartyContainer partycode={this.changePartyCode} />
+        <p>{this.state.partycode}</p>
         <JoinPartyContainer />
         <FooterComponent />
 
