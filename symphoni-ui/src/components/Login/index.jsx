@@ -15,7 +15,7 @@ class Login extends Component {
   }
 
   authenticate = () => {
-    const url = new URL('https://accounts.spotify.com/authorize');
+    const url = new URL('https://accounts.spotify.com/en/authorize?client_id=08925fe22f0f4ebea80ffc92634bb0e0&response_type=code&redirect_uri=http:%2F%2Flocalhost:3000&scope=user-library-read');
     url.search = new URLSearchParams({
       client_id: config.spotify_client_id,
       response_type: 'code',
