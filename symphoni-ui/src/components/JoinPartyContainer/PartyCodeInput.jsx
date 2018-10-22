@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import UserInput from './UserInput';
-
+import config from '../../config';
 class PartyCodeInput extends Component {
     constructor(props){
         super(props);
@@ -9,17 +9,19 @@ class PartyCodeInput extends Component {
         }
         
     }
+    
     checkCode = (event) => {
-        const val= "HELLO";
-        
-        if(event.key === "Enter"){
-            console.log(val);
-        }
-        else{
-            console.log(val);
-        }
+        event.preventDefault();
+        const partyURI = `${config.url}party/${this.state.enterCode}`;
+        fetch(partyURI, {
+            method: 'GET',
+        }).then(response => response.json().then((data)=>{
+            const {partyCode} = this.props;
+            if(data.code && data.code === this.state.enterCode){
+                console.log("YAY");
+            }
+        }));
     }
-
 
     arrayHandler = (i, event) => {
         event.preventDefault();
@@ -33,12 +35,12 @@ class PartyCodeInput extends Component {
     render(){
         return (
             <div>
-                <UserInput idx='0'  onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
-                <UserInput idx='1'  onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
-                <UserInput idx='2'  onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
-                <UserInput idx='3'  onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
-                <UserInput idx='4'  onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
-                <UserInput idx='5'  onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
+                <UserInput idx='0'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='1'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='2'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='3'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='4'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
+                <UserInput idx='5'  onChange={this.arrayHandler} onKeyPress={this.checkCode} />
                 <a className="waves-effect waves-light btn-small" onClick={this.checkCode}><i className="material-icons">arrow_drop_down</i></a>
             </div>
         );

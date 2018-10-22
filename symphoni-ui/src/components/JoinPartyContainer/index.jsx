@@ -8,7 +8,7 @@ class JoinPartyContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      partyCode: ''
     };
   }
   render() {
