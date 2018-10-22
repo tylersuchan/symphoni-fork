@@ -3,6 +3,7 @@ import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
 import JoinPartyContainer from '../JoinPartyContainer';
 import FooterComponent from '../FooterComponent';
+import QueueContainer from '../QueueContainer';
 
 class App extends Component {
   constructor(props) {
