@@ -16,10 +16,8 @@ class Party(Resource):
 
         parser = reqparse.RequestParser()
         parser.add_argument('access_token',type=str, location='json', required=True)
-        parser.add_argument('token_type',type=str, location='json', required=True)
         parser.add_argument('expires_in',type=int, location='json', required=True)
         parser.add_argument('refresh_token',type=str, location='json', required=True)
-        parser.add_argument('scope',type=str, location='json', required=True)
         try:
             args = parser.parse_args(strict=True)
         except:
