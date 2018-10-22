@@ -26,7 +26,7 @@ class Party(Resource):
         code = ''.join(random.choices(
             string.ascii_uppercase + string.digits, k=6))
 
-        persistence.db[code] = { 'name': name, 'playlist' : []}#, 'oauth_token': args}
+        persistence.db[code] = { 'name': name, 'playlist' : [], 'oauth_token': {}}
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 201
 
