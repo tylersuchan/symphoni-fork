@@ -51,7 +51,7 @@ class QueueContainer extends Component {
         <div className="col s2">
           <img
             className="responsive-img"
-            src={song.album_information.album_images.url}
+            src={song.album_information.album_images[0].url}
             alt={song.album_information.album_name}
           />
         </div>
