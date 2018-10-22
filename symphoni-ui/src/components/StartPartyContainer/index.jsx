@@ -38,6 +38,7 @@ class StartPartyContainer extends Component {
   }
 }
 
+
 StartPartyContainer.propTypes = {
   setPartyCode: PropTypes.func.isRequired,
   setPartyName: PropTypes.func.isRequired,

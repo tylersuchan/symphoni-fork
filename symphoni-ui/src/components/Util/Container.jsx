@@ -6,6 +6,7 @@ const { $ } = window;
 class Container extends Component {
   componentDidMount() {
     $('.scrollspy').scrollSpy();
+    $('.collapsible').collapsible();
   }
 
   render() {

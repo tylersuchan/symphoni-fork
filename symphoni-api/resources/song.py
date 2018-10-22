@@ -12,6 +12,10 @@ class Song(Resource):
         if not code in persistence.db:
             return 404
 
+
+        if not persistence.db[code]["spotify_token_details"]:
+            return {"message": "Token not found"},400
+
         parser = reqparse.RequestParser()
         parser.add_argument("track", type=str)
         parser.add_argument("artist", type=str)
@@ -22,7 +26,7 @@ class Song(Resource):
             return {"message": "Invalid Input"}, 400
 
         spotify = spotipy.Spotify(
-            auth=persistence.db[code]["oauth_token"]["access_token"]
+            auth=persistence.db[code]["spotify_token_details"]["access_token"]
         )
 
         jsonResult = spotify.search(q="track:" + args["track"], type="track")
