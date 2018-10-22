@@ -7,12 +7,12 @@ import config from '../../config';
 class StartPartyContainer extends Component {
   getPartyCodeOnEnter = (event) => {
     if (event.key === 'Enter') {
-      const partyURI = `${config.url}party/${event.target.value}`;
+      const partyURI = `http://127.0.0.1:5000/party/${event.target.value}`;
       fetch(partyURI, {
         method: 'PUT',
       }).then(response => response.json().then((data) => {
-        const { partyCode } = this.props;
-        partyCode(data.code);
+        const { setPartyCode } = this.props;
+        setPartyCode(data.code);
       }));
     }
   };
@@ -37,14 +37,9 @@ class StartPartyContainer extends Component {
   }
 }
 
-
 StartPartyContainer.propTypes = {
-<<<<<<< HEAD
   setPartyCode: PropTypes.func.isRequired,
   setPartyName: PropTypes.func.isRequired,
-=======
-  partyCode: PropTypes.func.isRequired,
->>>>>>> f399c6dc70f343d901d908d6c790bb94ca03883f
 };
 
 export default StartPartyContainer;

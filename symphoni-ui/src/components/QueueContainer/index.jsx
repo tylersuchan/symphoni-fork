@@ -19,12 +19,15 @@ class QueueContainer extends Component {
 
   componentWillMount() {
     const { code } = this.props;
-    const url = `${config.url}party/${code}playlist`;
-    fetch(url, {
-      method: 'GET',
-    }).then(response => response.json().then((data) => {
-      this.setState({ playlist: data.results });
-    }));
+
+    if (code) {
+      const url = `${config.url}party/${code}playlist`;
+      fetch(url, {
+        method: 'GET',
+      }).then(response => response.json().then((data) => {
+        this.setState({ playlist: data.results });
+      }));
+    }
   }
 
   render() {
