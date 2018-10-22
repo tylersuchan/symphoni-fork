@@ -16,6 +16,7 @@ class App extends Component {
   };
 
   render() {
+    console.log(window);
     return (
       <div>
         <HomeContainer />

@@ -8,9 +8,11 @@ class JoinPartyContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      partyCode: ''
+      partyCode : '',
+      codeFound : null
     };
   }
+
   render() {
     return (
       <Container id="join">
@@ -20,8 +22,9 @@ class JoinPartyContainer extends Component {
               <h3> Enter Room Code: </h3>
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
-                  {' '}
-                  <PartyCodeInput />
+                 <PartyCodeInput changeFoundStatus = {(status) => {this.setState({codeFound: status})}}>
+                  {this.state.codeFound === true &&  <a onClick="window.Materialize.toast({html: 'Found the Code!'})" className="btn"> Party Found! </a>}
+                  </PartyCodeInput> 
                   <label htmlFor="join-code"></label>
                 </div>
               </div>

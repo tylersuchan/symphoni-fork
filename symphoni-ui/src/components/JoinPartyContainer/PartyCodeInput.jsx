@@ -5,30 +5,35 @@ class PartyCodeInput extends Component {
     constructor(props){
         super(props);
         this.state={
-            enterCode : Array(6),
+            userCode : Array(6),
         }
         
     }
     
     checkCode = (event) => {
         event.preventDefault();
-        const partyURI = `${config.url}party/${this.state.enterCode}`;
+        const {userCode} = this.state;
+        //localhost::3000/party/"ARRAY"
+        const partyURI = `${config.url}party/${userCode.join("")}`;
         fetch(partyURI, {
             method: 'GET',
         }).then(response => response.json().then((data)=>{
             const {partyCode} = this.props;
-            if(data.code && data.code === this.state.enterCode){
-                console.log("YAY");
+            if(data.code){
+                this.props.changeFoundStatus(true);
+            }
+            else{
+                this.props.changeFoundStatus(false);
             }
         }));
     }
 
     arrayHandler = (i, event) => {
         event.preventDefault();
-        const inputVals = this.state.enterCode.splice();
+        const inputVals = this.state.userCode.splice();
         inputVals[i] = event.target.value;
         console.log(inputVals)
-        this.setState({enterCode: inputVals});
+        this.setState({userCode: inputVals});
     }
 
     
