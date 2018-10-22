@@ -37,6 +37,7 @@ class StartPartyContainer extends Component {
   }
 }
 
+
 StartPartyContainer.propTypes = {
 <<<<<<< HEAD
   setPartyCode: PropTypes.func.isRequired,
