@@ -13,12 +13,12 @@ class PartyCodeInput extends Component {
     checkCode = (event) => {
         event.preventDefault();
         const {userCode} = this.state;
-        //localhost::3000/party/"ARRAY"
-        const partyURI = `${config.url}party/${userCode.join("")}`;
+        //localhost::5000/party/"ARRAY"
+        const partyURI = `http://127.0.0.1:5000/party/${userCode.join("")}`;
         fetch(partyURI, {
             method: 'GET',
         }).then(response => response.json().then((data)=>{
-            const {partyCode} = this.props;
+            const {setPartyCode} = this.props;
             if(data.code){
                 this.props.changeFoundStatus(true);
             }
