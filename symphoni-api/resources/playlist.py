@@ -46,8 +46,8 @@ class Playlist(Resource):
             return 404
         
         parser = reqparse.RequestParser()
-        parser.add_argument('track_uri',type=str,required=True)
-        parser.add_argument('vote',type=str,required=True)
+        parser.add_argument('track_uri',type=str,location='args',required=True)
+        parser.add_argument('vote',type=str,location='args',required=True)
         try:
             args = parser.parse_args(strict=True)
         except:

@@ -52,13 +52,59 @@ class TestPlaylistAPI(unittest.TestCase):
         
         party = requests.get('http://localhost:5000/party/'+self.code+'/playlist/')
         assert party.json()['playlist'] is not []
+    
+    def test_get_invalid_playlist(self):
+        party = requests.get('http://localhost:5000/party/NOTVALID/playlist/')
+        assert "404" in party.text
 
     def test_put_song_in_playlist(self):
         header = {"Content-Type": "application/json"}
         party = requests.put('http://localhost:5000/party/'+self.code+'/playlist/',headers=header,json=self.song)
         assert party.json()['party_data']['playlist'][0]  
 
+    def test_put_invalid_code(self):
+        header = {"Content-Type": "application/json"}
+        party = requests.put('http://localhost:5000/party/NOTVALID/playlist/',headers=header,json=self.song)
+        
+        assert "404" in party.text
 
+    def test_put_invalid_json(self):
+        header = {"Content-Type": "application/json"}
+        party = requests.put('http://localhost:5000/party/'+self.code+'/playlist/',headers=header,json={'song': 'test'} )
+
+        assert "Invalid JSON" in party.text
+
+
+    def test_delete_song_in_playlist(self):
+        header = {"Content-Type": "application/json"}
+        party = requests.delete('http://localhost:5000/party/'+self.code+'/playlist/?track_uri=spotify%3Atrack%3A49FYlytm3dAAraYgpoJZux')
+        assert not party.json()['party_data']['playlist']  
+ 
+
+    def test_delete_invalid_query(self):
+        party = requests.delete('http://localhost:5000/party/'+self.code+'/playlist/?invalid_parameter=invalidsong')
+        assert "Invalid Input" in party.text
+
+    def test_delete_invalid_song_in_playlist(self):
+        header = {"Content-Type": "application/json"}
+        party = requests.put('http://localhost:5000/party/'+self.code+'/playlist/',headers=header,json=self.song)
+        playlist = party.json()['party_data']['playlist'][0]  
+        
+        party = requests.delete('http://localhost:5000/party/'+self.code+'/playlist/?track_uri=invalidsong')
+        assert party.json()['party_data']['playlist'][0] == playlist
+
+
+    def test_delete_invalid_code(self):
+        party = requests.delete('http://localhost:5000/party/NOTVALID/playlist/')
+        assert "404" in party.text
+
+    def test_get_put(self):
+        header = {"Content-Type": "application/json"}
+        party = requests.put('http://localhost:5000/party/'+self.code+'/playlist/',headers=header,json=self.song)
+        
+        party = requests.get('http://localhost:5000/party/'+self.code+'/playlist/')
+
+        assert len(party.json()['playlist'][0]) != 0
 
 
 if __name__ == "__main__":
