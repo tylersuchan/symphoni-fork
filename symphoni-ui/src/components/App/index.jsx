@@ -6,11 +6,11 @@ import FooterComponent from '../FooterComponent';
 import QueueContainer from '../QueueContainer';
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      partyCode: '',
-      partyName: '',
+      partyCode: localStorage.getItem('partyCode'),
+      partyName: localStorage.getItem('partyName'),
       deviceID: null,
     };
   }
@@ -22,11 +22,17 @@ class App extends Component {
       <div>
         <HomeContainer />
         <StartPartyContainer
-          setPartyCode={newPartyCode => this.setState({ partyCode: newPartyCode })}
-          setPartyName={newPartyName => this.setState({ partyName: newPartyName })}
+          setPartyCode={(newPartyCode) => {
+            this.setState({ partyCode: newPartyCode });
+            localStorage.setItem('partyCode', newPartyCode);
+          }}
+          setPartyName={(newPartyName) => {
+            this.setState({ partyName: newPartyName });
+            localStorage.setItem('partyName', newPartyName);
+          }}
         />
         <JoinPartyContainer />
-        <QueueContainer code={partyCode} partyName={partyName} />
+        <QueueContainer partyCode={partyCode} partyName={partyName} />
         <FooterComponent />
       </div>
     );

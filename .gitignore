@@ -10,7 +10,8 @@ symphoni-ui/node_modules
 /build
 
 # configuration files
-/symphoni-ui/src/config.js
+symphoni-ui/src/config.js
+symphoni-api/config.ini
 
 # virtual environment
 /symphoni-api/env/*

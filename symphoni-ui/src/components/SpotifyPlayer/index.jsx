@@ -8,7 +8,6 @@ class SpotifyPlayer extends Component {
 
     this.state = {
       player: null,
-      authCode: null,
       accessToken: null,
       refreshToken: null,
     };
@@ -16,23 +15,52 @@ class SpotifyPlayer extends Component {
 
   componentDidMount() {
     if (window.location.search) {
-      this.setState({ authCode: new URL(document.location).searchParams.get('code') });
-      window.history.pushState('', document.title, window.location.origin);
+      const parameters = new URL(document.location).searchParams;
+      const access_token = parameters.get('access_token');
+      const refresh_token = parameters.get('refresh_token');
+      const { partyCode } = this.props;
+      // window.history.pushState('', document.title, window.location.origin);
+
+      this.setState({
+        accessToken: access_token,
+        refreshToken: refresh_token,
+      });
+
+      const body = {
+        access_token,
+        expires_in: 3600,
+        refresh_token,
+      };
+
+      fetch(`${config.url}token/${partyCode}`, {
+        method: 'PUT',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify(body),
+      });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { authCode, accessToken } = this.state;
-    if (authCode && authCode !== prevState.authCode) {
-      this.getAccessToken();
-    }
-
+    const { accessToken } = this.state;
     if (accessToken && accessToken !== prevState.accessToken) {
       this.setupPlayerEvents();
     }
   }
 
-  setupPlayerEvents = () => {
+  waitForSpotify = () => new Promise((resolve) => {
+    if ('Spotify' in window) {
+      resolve();
+    } else {
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        resolve();
+      };
+    }
+  });
+
+  setupPlayerEvents = async () => {
+    await this.waitForSpotify();
     const { accessToken } = this.state;
     const {
       volume, name, playerIsReady, setPlayerDeviceID,
@@ -53,43 +81,6 @@ class SpotifyPlayer extends Component {
     });
 
     player.connect();
-  };
-
-  getAccessToken = () => {
-    const { authCode } = this.state;
-    const url = new URL('https://accounts.spotify.com/api/token');
-    url.search = new URLSearchParams({
-      grant_type: 'authorization_code',
-      code: authCode,
-      redirect_uri: config.redirect_uri,
-    });
-
-    const encodedCodes = btoa(`${config.spotify_client_id}:${config.spotify_client_secret}`);
-
-    fetch(url, {
-      method: 'POST',
-      // mode: 'no-cors',
-      headers: new Headers({
-        Authorization: `Basic ${encodedCodes}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded',
-      }),
-    }).then(response => response.json().then((data) => {
-      const { partyName } = this.props;
-      const body = {
-        access_token: data.access_token,
-        refresh_token: data.refresh_token,
-        expires_in: data.expires_in,
-      };
-      this.setState({ accessToken: data.access_token, refreshToken: data.refresh_token });
-      fetch(`${config.url}party/${partyName}`, {
-        method: 'PUT',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-        }),
-        body: JSON.stringify(body),
-      });
-    }));
   };
 
   play = (deviceId) => {
@@ -113,7 +104,7 @@ class SpotifyPlayer extends Component {
 }
 
 SpotifyPlayer.propTypes = {
-  partyName: PropTypes.string.isRequired,
+  partyCode: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   volume: PropTypes.number.isRequired,
   playerIsReady: PropTypes.func.isRequired,

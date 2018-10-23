@@ -8,7 +8,7 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    if (new URL(document.location).searchParams.get('code')) {
+    if (new URL(document.location).searchParams.get('access_token')) {
       const { setAuthenticated } = this.props;
       setAuthenticated(true);
     }

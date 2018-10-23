@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Container from '../Util/Container';
 import Login from '../Login';
 import SpotifyPlayer from '../SpotifyPlayer';
+import SpotifySearch from '../SpotifyPlayer/SpotifySearch';
 import config from '../../config';
 import './QueueContainer.css';
 
@@ -19,20 +20,23 @@ class QueueContainer extends Component {
 
   componentWillMount() {
     const { code } = this.props;
-    const url = `${config.url}party/${code}playlist`;
-    fetch(url, {
-      method: 'GET',
-    }).then(response => response.json().then((data) => {
-      this.setState({ playlist: data.results });
-    }));
+
+    if (code) {
+      const url = `${config.url}party/${code}playlist`;
+      fetch(url, {
+        method: 'GET',
+      }).then(response => response.json().then((data) => {
+        this.setState({ playlist: data.results });
+      }));
+    }
   }
 
   render() {
     const { authenticated, playlist, playerIsReady } = this.state;
-    const { partyName, code } = this.props;
+    const { partyCode } = this.props;
 
     const playerProps = {
-      partyName,
+      partyCode,
       name: 'Symphoni Music Player',
       volume: 0.5,
       playerIsReady: () => {
@@ -76,6 +80,7 @@ class QueueContainer extends Component {
         {authenticated && (
           <Fragment>
             <SpotifyPlayer {...playerProps} />
+            <SpotifySearch partyCode={partyCode} />
             <h3 className="ml-xs">Your Playlist:</h3>
             <br />
             <div className="row mt-xxs mb-0">
@@ -100,7 +105,8 @@ class QueueContainer extends Component {
 }
 
 QueueContainer.propTypes = {
-  code: PropTypes.string.isRequired,
+  partyCode: PropTypes.string,
+  partyName: PropTypes.string,
 };
 
 export default QueueContainer;
