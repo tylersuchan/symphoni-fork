@@ -8,10 +8,23 @@ class JoinPartyContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      partyCode : '',
-      codeFound : null
+      partyCode: '',
+      codeFound: null,
     };
   }
+
+  // class StartPartyContainer extends Component {
+  // getPartyCodeOnEnter = (event) => {
+  //   if (event.key === 'Enter') {
+  //     const partyURI = `${config.url}party/${event.target.value}`;
+  //     fetch(partyURI, {
+  //       method: 'GET',
+  //     }).then(response => response.json().then((data) => {
+  //       const { partyCode } = this.props;
+  //       partyCode(data.code);
+  //     }));
+  //   }
+  // };
 
   render() {
     return (
@@ -22,10 +35,39 @@ class JoinPartyContainer extends Component {
               <h3> Enter Room Code: </h3>
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
-                 <PartyCodeInput changeFoundStatus = {(status) => {this.setState({codeFound: status})}}>
-                  {this.state.codeFound === true &&  <a onClick="window.Materialize.toast({html: 'Found the Code!'})" className="btn"> Party Found! </a>}
-                  </PartyCodeInput> 
-                  <label htmlFor="join-code"></label>
+                  <PartyCodeInput
+                    changeFoundStatus={(status) => {
+                      this.setState({ codeFound: status });
+                    }}
+                  >
+                    {this.state.codeFound === true && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          window.Materialize.toast({ html: 'Found the Code!' });
+                        }}
+                        className="btn"
+                        >
+                        {' '}
+                        Party Found!
+                        {' '}
+                      </button>
+                    )}
+                    {this.state.codeFound === false && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          window.Materialize.toast({ html: 'Did not find the Code!' });
+                        }}
+                        className="btn"
+                        >
+                        {' '}
+                        Party Code Incorrect!
+                        {' '}
+                      </button>
+                    )}
+                  </PartyCodeInput>
+                  <label htmlFor="join-code" />
                 </div>
               </div>
             </div>
@@ -37,7 +79,8 @@ class JoinPartyContainer extends Component {
 }
 
 JoinPartyContainer.propTypes = {
-  partyCode: PropTypes.func.isRequired,
+  setPartyCode: PropTypes.func.isRequired,
+  setPartyName: PropTypes.func.isRequired,
 };
 
 export default JoinPartyContainer;
