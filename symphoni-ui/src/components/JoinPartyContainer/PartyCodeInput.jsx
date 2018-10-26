@@ -14,12 +14,19 @@ class PartyCodeInput extends Component {
         event.preventDefault();
         const {userCode} = this.state;
         //localhost::5000/party/"ARRAY"
+<<<<<<< HEAD
         console.log(userCode);
+=======
+>>>>>>> 326afe3b03619b04805dfc2a981f91ffb2ce6f2c
         const partyURI = `http://127.0.0.1:5000/party/${userCode.join("")}`;
         fetch(partyURI, {
             method: 'GET',
         }).then(response => response.json().then((data)=>{
+<<<<<<< HEAD
             const {setPartyCode, setPartyName} = this.props;
+=======
+            const {setPartyCode} = this.props;
+>>>>>>> 326afe3b03619b04805dfc2a981f91ffb2ce6f2c
             if(data.code){
                 setPartyCode(data.code);
                 setPartyName(data.party_data.name);

@@ -2,27 +2,32 @@ import React, { Component } from 'react';
 import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
 import JoinPartyContainer from '../JoinPartyContainer';
+import FooterComponent from '../FooterComponent';
+import QueueContainer from '../QueueContainer';
 
 class App extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      partycode : ''
+      partyCode: '',
+      partyName: '',
+      deviceID: null,
     };
   }
 
-  changePartyCode = (newPartyCode) => {
-    this.setState({partycode : newPartyCode});
-  };
-
   render() {
-    console.log(window);
+    const { partyName, partyCode } = this.state;
+    const componentProps = {
+      setPartyCode: newPartyCode => this.setState({ partyCode: newPartyCode }),
+      setPartyName: newPartyName => this.setState({ partyName: newPartyName }),
+    };
     return (
       <div>
         <HomeContainer />
-        <StartPartyContainer partycode={this.changePartyCode} />
-        <p>{this.state.partycode}</p>
-        <JoinPartyContainer />
+        <StartPartyContainer {...componentProps} />
+        <JoinPartyContainer {...componentProps} />
+        <QueueContainer code={partyCode} partyName={partyName} />
+        <FooterComponent />
       </div>
     );
   }

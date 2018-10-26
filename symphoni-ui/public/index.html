@@ -30,7 +30,7 @@
 
 
     <!-- QUEUE CONTAINER -->
-    <div class="container">
+    <!-- <div class="container">
       <h3 class="ml-xs">Your Playlist:</h3><br>
       <div class="row mt-xxs mb-0">
         <div class="offset-s2 col s10">
@@ -56,44 +56,20 @@
           <div class="col s4">Scorpion</div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- FOOTER -->
-    <footer class="page-footer grey lighten-3">
-      <div class="container" id="privacy">
-        <div class="row">
-          <div class="col 16 s12">
-            <div id="Privacy Policy">
-              <h5 class="black-text">Privacy Policy</h5>
-              <p class="black-text"> The privacy policy will go here </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="container" id="contactus">
-        <div class="row">
-          <div class="col 16 s12">
-            <div id="Contact Us">
-              <h5 class="black-text">Contact Us</h5>
-              <p class="black-text"> Information about contacting the developers will be placed here in the future </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-copyright">
-        <div class="container">
-          © 2014 Copyright Text
-          <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
-      </div>
-    </footer>
+    
   </main>
 
-  <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script type="text/javascript " src="https://code.jquery.com/jquery-3.2.1.min.js "></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js "></script>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      console.log("The Web Playback SDK is ready");
+    };
+  </script>
 </body>
 
 </html>
