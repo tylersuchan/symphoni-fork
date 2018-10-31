@@ -12,7 +12,7 @@ class JoinPartyContainer extends Component {
       codeFound: null,
     };
   }
-  
+
   render() {
     return (
       <Container id="join">
@@ -22,21 +22,18 @@ class JoinPartyContainer extends Component {
               <h3> Enter Room Code: </h3>
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
-                
                   <PartyCodeInput
                     changeFoundStatus={(status) => {
                       this.setState({ codeFound: status });
                     }}
                     // IF code found is true toast returns Found Code!
                   >
-                    {this.state.codeFound === true && (
-                     window.Materialize.toast('Success! Proceeding to Queue', 5000 ))
-                    }
-                  
-                   // IF code not found toast returns Error, should send a delete all down to the child
-                   {this.state.codeFound === false && (
-                     window.Materialize.toast('Error Incorrect Input!', 5000))
-                    }
+                    {this.state.codeFound === true
+                      && window.Materialize.toast('Success! Proceeding to Queue', 5000)}
+                    // IF code not found toast returns Error, should send a delete all down to the
+                    child
+                    {this.state.codeFound === false
+                      && window.Materialize.toast('Error Incorrect Input!', 5000)}
                   </PartyCodeInput>
                   <label htmlFor="join-code" />
                 </div>

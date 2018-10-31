@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Container from '../Util/Container';
-import './StartPartyContainer.css';
 import config from '../../config';
 
 class StartPartyContainer extends Component {

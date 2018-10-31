@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
 import QueueContainer from '../QueueContainer';
+import JoinPartyContainer from '../JoinPartyContainer';
 import config from '../../config';
 
 class App extends Component {
@@ -38,7 +39,6 @@ class App extends Component {
       isHost,
     };
 
-  render() {
     return (
       <div>
         <HomeContainer />
@@ -55,6 +55,7 @@ class App extends Component {
             this.setState({ isHost: !isHost });
           }}
         />
+        <JoinPartyContainer />
         <QueueContainer {...queueProps} />
       </div>
     );
