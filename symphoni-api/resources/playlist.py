@@ -1,27 +1,28 @@
-from flask_restful import reqparse, Resource
+from flask_restful import reqparse, Resource, abort
 import string
 import persistence
 import spotipy
 import json
 
+
 class Playlist(Resource):
     def get(self, code):
         if not code in persistence.db:
-            return 404
+            return abort(404,message="Code {} doesn't exist".format(code))
 
         retval = {'playlist': persistence.db[code]['playlist'] }
         return retval,200 
 
     def put(self, code):
         if not code in persistence.db:
-            return 404
+            return abort(404,message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('song',type=str,location='json',required=True)
         try:
             args = parser.parse_args(strict=True)
         except:
-            return {"message": "Invalid Input"},400
+            return abort(400,message="Invalid Input")
 
         args["song"]
         json_acceptable_string = args["song"].replace("'","\"")
@@ -44,7 +45,7 @@ class Playlist(Resource):
 
     def delete(self,code): 
         if not code in persistence.db:
-            return 404
+            return abort(404,message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('track_uri',type=str,required=True)
@@ -55,7 +56,7 @@ class Playlist(Resource):
 
         persistence.db[code]["playlist"][:] = [song for song in persistence.db[code]["playlist"] if song.get("song").get("track_uri") != args["track_uri"]]
         
-        return {'code': code, 'party_data': persistence.db[code]}
+        return {'code': code, 'party_data': persistence.db[code]},202
 
 
 

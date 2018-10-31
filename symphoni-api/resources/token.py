@@ -1,4 +1,4 @@
-from flask_restful import reqparse, Resource
+from flask_restful import reqparse, Resource, abort
 import persistence 
 import json
 
@@ -6,7 +6,7 @@ import json
 class Token(Resource):
     def put(self,code):
         if not code in persistence.db:
-            return 404
+            return abort(404,message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('access_token',type=str, location='json', required=True)
@@ -15,7 +15,7 @@ class Token(Resource):
         try:
            args = parser.parse_args(strict=True)
         except:
-            return {"message": "Invalid Input"},400
+            return abort(400,message = "Invalid Input")
 
         persistence.db[code]['spotify_token_details'] = args
 

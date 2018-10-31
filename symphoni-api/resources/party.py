@@ -1,4 +1,4 @@
-from flask_restful import reqparse, Resource
+from flask_restful import reqparse, Resource, abort
 import random
 import string
 import persistence
@@ -8,7 +8,7 @@ class Party(Resource):
     def get(self, name):
         code = name
         if not code in persistence.db:
-            return 404
+            return abort(404,message="Code {} doesn't exist".format(code))
         retval = {'code': code, 'party_data': persistence.db[code]} 
         return retval,200 
 
@@ -24,7 +24,7 @@ class Party(Resource):
     def post(self,name):
         code = name
         if not code in persistence.db:
-            return 404
+            return abort(404,message="Code {} doesn't exist".format(code))
         
         parser = reqparse.RequestParser()
         parser.add_argument('name')
@@ -33,7 +33,7 @@ class Party(Resource):
             if args['name'] is None or args['name'] is "":
                 raise Exception('Input is None') 
         except:
-            return {"message": "Invalid Input"},400
+            return abort(400,message="Invalid arguments")
 
 
         persistence.db[code]['name'] = args['name']
@@ -44,12 +44,11 @@ class Party(Resource):
     def delete(self,name): 
         code = name
         if not code in persistence.db:
-            return 404
-        
+            return abort(404,message="Code {} doesn't exist".format(code))
         try:
             del persistence.db[code]
         except:
-            return 500
+            return abort(500,message="Something went horribly wrong")
         
         return {"message": "Delete Successful"},200
 
