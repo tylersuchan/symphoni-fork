@@ -10,10 +10,19 @@ symphoni-ui/node_modules
 /build
 
 # configuration files
-/symphoni-ui/src/config.js
+symphoni-ui/src/config.js
+symphoni-api/config.ini
 
 # virtual environment
 /symphoni-api/env/*
+
+# python cache
+symphoni-api/__pycache__
+symphoni-api/resources/__pycache__
+symphoni-ui/Tests/__pycache__
+
+# ssh key
+SSH_Symphoni.pem
 
 # misc
 .DS_Store
@@ -26,7 +35,6 @@ symphoni-ui/node_modules
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-__pycache__
 
 npm-debug.log*
 yarn-debug.log*

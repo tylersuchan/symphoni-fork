@@ -1,25 +1,61 @@
 import React, { Component } from 'react';
-
-import HomeContainer from '../HomeContainer'
-import JoinPartyContainer from '../JoinPartyContainer';
+import HomeContainer from '../HomeContainer';
+import StartPartyContainer from '../StartPartyContainer';
+import QueueContainer from '../QueueContainer';
+import config from '../../config';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { partyCode: '' };
+    this.state = {
+      partyCode: localStorage.getItem('partyCode'),
+      partyName: localStorage.getItem('partyName'),
+      isHost: false,
+    };
   }
 
-  changePartyCode = (newPartyCode) => {
-    this.setState({ partyCode: newPartyCode });
-  };
+  componentWillMount() {
+    const { partyCode } = this.state;
+
+    if (partyCode) {
+      fetch(`${config.url}party/${partyCode}`, {
+        method: 'GET',
+      }).then((response) => {
+        if (!response.ok) {
+          localStorage.clear();
+          this.setState({ partyCode: null, partyName: null });
+        }
+      });
+    }
+  }
+
+  render() {
+    const { partyName, partyCode, isHost } = this.state;
+
+    const queueProps = {
+      partyCode,
+      partyName,
+      isHost,
+    };
 
   render() {
     return (
       <div>
         <HomeContainer />
-      
-        <JoinPartyContainer partyCode={this.changePartyCode} />
-        <p>{this.state.partyCode}</p>
+        <StartPartyContainer
+          setPartyCode={(newPartyCode) => {
+            this.setState({ partyCode: newPartyCode });
+            localStorage.setItem('partyCode', newPartyCode);
+          }}
+          setPartyName={(newPartyName) => {
+            this.setState({ partyName: newPartyName });
+            localStorage.setItem('partyName', newPartyName);
+          }}
+          isHost={() => {
+            this.setState({ isHost: !isHost });
+          }}
+        />
+        <QueueContainer {...queueProps} />
       </div>
     );
   }
