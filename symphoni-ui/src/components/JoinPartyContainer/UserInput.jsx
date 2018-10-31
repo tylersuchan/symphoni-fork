@@ -11,6 +11,7 @@ class UserInput extends Component {
    
     handleInput = (event) => {
         const {value} = event.target;
+        this.setState({value: event.target.value});
         this.props.onChange(this.props.idx,event);
         if(value.length ===1 || value.length===0){
             if(this.myTextInput.nextSibling){
@@ -46,17 +47,22 @@ class UserInput extends Component {
         }
     }
 
-
+    handleError = (event) =>{
+        console.log(this.props.foundError);
+        if(this.props.foundError){
+            this.setState({value : "_"});
+        }
+    }
     render() { 
         return (  
             <input 
                 ref={(input) =>{ this.myTextInput = input;  }}
                 onChange = {this.handleInput}
                 onKeyDown = {this.handlePress}
+                errorCheck = {this.handleError}
                 placeholder = "_"
                 maxLength="1"
             /> 
-
         );
     }
 }

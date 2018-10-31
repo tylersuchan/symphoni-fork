@@ -12,20 +12,7 @@ class JoinPartyContainer extends Component {
       codeFound: null,
     };
   }
-
-  // class StartPartyContainer extends Component {
-  // getPartyCodeOnEnter = (event) => {
-  //   if (event.key === 'Enter') {
-  //     const partyURI = `${config.url}party/${event.target.value}`;
-  //     fetch(partyURI, {
-  //       method: 'GET',
-  //     }).then(response => response.json().then((data) => {
-  //       const { partyCode } = this.props;
-  //       partyCode(data.code);
-  //     }));
-  //   }
-  // };
-
+  
   render() {
     return (
       <Container id="join">
@@ -35,37 +22,23 @@ class JoinPartyContainer extends Component {
               <h3> Enter Room Code: </h3>
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
+                
                   <PartyCodeInput
                     changeFoundStatus={(status) => {
                       this.setState({ codeFound: status });
                     }}
+                    // IF code found is true toast returns Found Code!
                   >
                     {this.state.codeFound === true && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          window.Materialize.toast({ html: 'Found the Code!' });
-                        }}
-                        className="btn"
-                        >
-                        {' '}
-                        Party Found!
-                        {' '}
-                      </button>
-                    )}
-                    {this.state.codeFound === false && (
-                      <button
-                        type="button"
-                        onClick={() => {
-                          window.Materialize.toast({ html: 'Did not find the Code!' });
-                        }}
-                        className="btn"
-                        >
-                        {' '}
-                        Party Code Incorrect!
-                        {' '}
-                      </button>
-                    )}
+                     <button onClick={() => {window.Materialize.toast('Success! Proceeding to Queue', 10000)} } />
+                     )
+                    }
+                  
+                   // IF code not found toast returns Error, should send a delete all down to the child
+                   {this.state.codeFound === false && (
+                     <button onClick={() => {window.Materialize.toast('Error Incorrect Input!', 10000)} }/>
+                     )
+                    }
                   </PartyCodeInput>
                   <label htmlFor="join-code" />
                 </div>
