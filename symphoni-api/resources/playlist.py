@@ -8,21 +8,21 @@ import json
 class Playlist(Resource):
     def get(self, code):
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
 
         retval = {'playlist': persistence.db[code]['playlist']}
         return retval, 200
 
     def put(self, code):
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('song', type=str, location='json', required=True)
         try:
             args = parser.parse_args(strict=True)
         except:
-            return abort(400, message="Invalid Input")
+            abort(400, message="Invalid Input")
 
         args["song"]
         json_acceptable_string = args["song"].replace("'", "\"")
@@ -45,7 +45,7 @@ class Playlist(Resource):
 
     def delete(self, code):
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('track_uri', type=str, required=True)

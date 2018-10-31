@@ -12,7 +12,7 @@ spotify_settings = config['spotify_settings']
 class Token(Resource):
     def put(self, code):
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('access_token', type=str,
@@ -24,7 +24,7 @@ class Token(Resource):
         try:
             args = parser.parse_args(strict=True)
         except:
-            return abort(400, message="Invalid Input")
+            abort(400, message="Invalid Input")
 
         persistence.db[code]['spotify_token_details'] = args
 

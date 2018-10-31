@@ -6,10 +6,12 @@ import json
 
 
 class Party(Resource):
+    print()
+
     def get(self, name):
         code = name
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 200
 
@@ -26,7 +28,7 @@ class Party(Resource):
     def post(self, name):
         code = name
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
 
         parser = reqparse.RequestParser()
         parser.add_argument('name')
@@ -35,7 +37,7 @@ class Party(Resource):
             if args['name'] is None or args['name'] is "":
                 raise Exception('Input is None')
         except:
-            return abort(400, message="Invalid arguments")
+            abort(400, message="Invalid arguments")
 
         persistence.db[code]['name'] = args['name']
         retval = {'code': code, 'party_data': persistence.db[code]}
@@ -45,11 +47,11 @@ class Party(Resource):
     def delete(self, name):
         code = name
         if not code in persistence.db:
-            return abort(404, message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
         try:
             del persistence.db[code]
         except:
-            return abort(500, message="Something went horribly wrong")
+            abort(500, message="Something went horribly wrong")
 
         return {"message": "Delete Successful"}, 200
 

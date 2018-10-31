@@ -10,10 +10,10 @@ import json
 class Song(Resource):
     def get(self, code):
         if not code in persistence.db:
-            return abort(404,message="Code {} doesn't exist".format(code))
+            abort(404, message="Code {} doesn't exist".format(code))
 
         if not persistence.db[code]["spotify_token_details"]:
-            return abort(400,message ="Token not found")
+            abort(400, message="Token not found")
 
         parser = reqparse.RequestParser()
         parser.add_argument("track", type=str)
@@ -22,17 +22,18 @@ class Song(Resource):
         try:
             args = parser.parse_args(strict=True)
         except:
-            return abort(400,message="Invalid Input")
+            abort(400, message="Invalid Input")
 
-        try:    
+        try:
             spotify = spotipy.Spotify(
                 auth=persistence.db[code]["spotify_token_details"]["access_token"]
             )
-            jsonResult = spotify.search(q="track:" + args["track"], type="track")
+            jsonResult = spotify.search(
+                q="track:" + args["track"], type="track")
 
         except:
-            return abort(400,message= "Invalid Token")
-        
+            abort(400, message="Invalid Token")
+
         retval = {"results": []}
 
         for items in jsonResult["tracks"]["items"]:
