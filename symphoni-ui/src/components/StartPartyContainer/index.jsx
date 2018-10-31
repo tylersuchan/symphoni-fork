@@ -11,9 +11,13 @@ class StartPartyContainer extends Component {
       fetch(partyURI, {
         method: 'PUT',
       }).then(response => response.json().then((data) => {
-        const { setPartyCode, setPartyName } = this.props;
-        setPartyCode(data.code);
-        setPartyName(data.party_data.name);
+        const { setPartyCode, setPartyName, isHost } = this.props;
+        if (response.ok) {
+          setPartyCode(data.code);
+          setPartyName(data.party_data.name);
+          isHost();
+          window.Materialize.toast('Party created successfully!', 4000);
+        }
       }));
     }
   };
@@ -41,6 +45,7 @@ class StartPartyContainer extends Component {
 StartPartyContainer.propTypes = {
   setPartyCode: PropTypes.func.isRequired,
   setPartyName: PropTypes.func.isRequired,
+  isHost: PropTypes.func.isRequired,
 };
 
 export default StartPartyContainer;

@@ -1,16 +1,33 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import config from '../../config';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   componentWillMount() {
-    if (new URL(document.location).searchParams.get('access_token')) {
-      const { setAuthenticated } = this.props;
-      setAuthenticated(true);
+    // When the component is about to mount, check if the spotify access token and refresh tokens are in uri
+    // If they are, propograte them up to the parent state and send that data to the API
+    if (window.location.search) {
+      const parameters = new URL(document.location).searchParams;
+      const accessToken = parameters.get('access_token');
+      const refreshToken = parameters.get('refresh_token');
+      const { partyCode, setAccessToken } = this.props;
+      window.history.pushState('', document.title, window.location.origin);
+
+      setAccessToken(accessToken);
+
+      const body = {
+        access_token: accessToken,
+        expires_in: 3600,
+        refresh_token: refreshToken,
+      };
+
+      fetch(`${config.url}token/${partyCode}`, {
+        method: 'PUT',
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify(body),
+      });
     }
   }
 
@@ -36,5 +53,10 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  partyCode: PropTypes.string,
+  setAccessToken: PropTypes.func.isRequired,
+};
 
 export default Login;

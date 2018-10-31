@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
-import JoinPartyContainer from '../JoinPartyContainer';
-import FooterComponent from '../FooterComponent';
 import QueueContainer from '../QueueContainer';
+import config from '../../config';
 
 class App extends Component {
   constructor(props) {
@@ -11,12 +10,33 @@ class App extends Component {
     this.state = {
       partyCode: localStorage.getItem('partyCode'),
       partyName: localStorage.getItem('partyName'),
-      deviceID: null,
+      isHost: false,
     };
   }
 
+  componentWillMount() {
+    const { partyCode } = this.state;
+
+    if (partyCode) {
+      fetch(`${config.url}party/${partyCode}`, {
+        method: 'GET',
+      }).then((response) => {
+        if (!response.ok) {
+          localStorage.clear();
+          this.setState({ partyCode: null, partyName: null });
+        }
+      });
+    }
+  }
+
   render() {
-    const { partyName, partyCode } = this.state;
+    const { partyName, partyCode, isHost } = this.state;
+
+    const queueProps = {
+      partyCode,
+      partyName,
+      isHost,
+    };
 
     return (
       <div>
@@ -30,10 +50,11 @@ class App extends Component {
             this.setState({ partyName: newPartyName });
             localStorage.setItem('partyName', newPartyName);
           }}
+          isHost={() => {
+            this.setState({ isHost: !isHost });
+          }}
         />
-        <JoinPartyContainer />
-        <QueueContainer partyCode={partyCode} partyName={partyName} />
-        <FooterComponent />
+        <QueueContainer {...queueProps} />
       </div>
     );
   }

@@ -12,41 +12,41 @@ class QueueContainer extends Component {
     super(props);
     this.state = {
       playlist: [],
-      authenticated: false,
       playerIsReady: false,
-      player: undefined,
+      accessToken: undefined,
     };
   }
 
   componentWillMount() {
-    const { code } = this.props;
+    this.updatePlaylist();
+  }
 
-    if (code) {
-      const url = `${config.url}party/${code}playlist`;
+  updatePlaylist = () => {
+    const { partyCode } = this.props;
+    if (partyCode) {
+      const url = `${config.url}party/${partyCode}/playlist`;
       fetch(url, {
         method: 'GET',
       }).then(response => response.json().then((data) => {
-        this.setState({ playlist: data.results });
+        if (response.ok) {
+          this.setState({ playlist: data.playlist });
+        }
       }));
     }
-  }
+  };
 
   render() {
-    const { authenticated, playlist, playerIsReady } = this.state;
-    const { partyCode } = this.props;
+    const { accessToken, playlist, playerIsReady } = this.state;
+    const { partyCode, partyName } = this.props;
 
     const playerProps = {
       partyCode,
+      accessToken,
+      playlist,
       name: 'Symphoni Music Player',
       volume: 0.5,
       playerIsReady: () => {
         this.setState({ playerIsReady: !playerIsReady });
-      },
-      setPlayerDeviceID: (deviceID) => {
-        this.setState({ deviceID });
-      },
-      setPlayer: (player) => {
-        this.setState({ player });
       },
     };
 
@@ -55,48 +55,61 @@ class QueueContainer extends Component {
         <div className="col s2">
           <img
             className="responsive-img"
-            src={song.album_information.album_images[0].url}
-            alt={song.album_information.album_name}
+            src={song.song.album_information.album_images[0].url}
+            alt={song.song.album_information.album_name}
           />
         </div>
         <div className="col s10 max-height valign-wrapper">
-          <div className="col s4">{song.track}</div>
-          <div className="col s4">{song.artist_information[0].artist_name}</div>
-          <div className="col s4">{song.album_information.album_name}</div>
+          <div className="col s4">{song.song.track}</div>
+          <div className="col s4">{song.song.artist_information[0].artist_name}</div>
+          <div className="col s4">{song.song.album_information.album_name}</div>
         </div>
       </div>
     ));
 
     return (
       <Container id="queue">
-        {!authenticated && (
+        {!accessToken && (
           <Fragment>
             <Login
-              setAuthenticated={isAuthenticated => this.setState({ authenticated: isAuthenticated })
-              }
+              setAccessToken={(newAccessToken) => {
+                this.setState({ accessToken: newAccessToken });
+              }}
+              partyCode={partyCode}
             />
           </Fragment>
         )}
-        {authenticated && (
+        {accessToken && (
           <Fragment>
-            <SpotifyPlayer {...playerProps} />
-            <SpotifySearch partyCode={partyCode} />
-            <h3 className="ml-xs">Your Playlist:</h3>
-            <br />
-            <div className="row mt-xxs mb-0">
-              <div className="offset-s2 col s10">
-                <div className="col s4">
-                  <b>Title</b>
-                </div>
-                <div className="col s4">
-                  <b>Artist</b>
-                </div>
-                <div className="col s4">
-                  <b>Album</b>
-                </div>
+            <div className="row grey lighten-3">
+              <div className="col s4">
+                <SpotifySearch partyCode={partyCode} updatePlaylist={this.updatePlaylist} />
+              </div>
+              <div className="col s4 center">
+                <h5>{`${partyName}'s Playlist`}</h5>
+              </div>
+              <div className="col s4">
+                <h5>{`Party Code: ${partyCode}`}</h5>
               </div>
             </div>
-            {songs}
+            <div className="row grey lighten-2 p-s">
+              <div className="row mt-xxs mb-0">
+                <div className="offset-s2 col s10">
+                  <div className="col s4">
+                    <b>Title</b>
+                  </div>
+                  <div className="col s4">
+                    <b>Artist</b>
+                  </div>
+                  <div className="col s4">
+                    <b>Album</b>
+                  </div>
+                </div>
+              </div>
+              <div className="row">{songs}</div>
+            </div>
+
+            <SpotifyPlayer {...playerProps} />
           </Fragment>
         )}
       </Container>
@@ -107,6 +120,7 @@ class QueueContainer extends Component {
 QueueContainer.propTypes = {
   partyCode: PropTypes.string,
   partyName: PropTypes.string,
+  isHost: PropTypes.bool,
 };
 
 export default QueueContainer;

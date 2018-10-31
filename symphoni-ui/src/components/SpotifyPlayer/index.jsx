@@ -1,69 +1,38 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import config from '../../config';
 
 class SpotifyPlayer extends Component {
   constructor(props) {
     super(props);
+    this.player = null;
+    this.deviceID = undefined;
+    // this.state = { refreshInterval: setInterval(this.refreshTokens, 36000) };
+  }
 
-    this.state = {
-      player: null,
-      accessToken: null,
-      refreshToken: null,
-    };
+  componentWillMount() {
+    this.setupPlayer();
   }
 
   componentDidMount() {
-    if (window.location.search) {
-      const parameters = new URL(document.location).searchParams;
-      const access_token = parameters.get('access_token');
-      const refresh_token = parameters.get('refresh_token');
-      const { partyCode } = this.props;
-      // window.history.pushState('', document.title, window.location.origin);
-
-      this.setState({
-        accessToken: access_token,
-        refreshToken: refresh_token,
-      });
-
-      const body = {
-        access_token,
-        expires_in: 3600,
-        refresh_token,
-      };
-
-      fetch(`${config.url}token/${partyCode}`, {
-        method: 'PUT',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-        }),
-        body: JSON.stringify(body),
-      });
+    const { playlist } = this.props;
+    if (playlist.length > 0) {
+      const songURIs = playlist.map(song => song.song_uri);
+      this.play(this.deviceID, songURIs);
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const { accessToken } = this.state;
-    if (accessToken && accessToken !== prevState.accessToken) {
-      this.setupPlayerEvents();
-    }
-  }
+  refreshTokens = () => {};
 
   waitForSpotify = () => new Promise((resolve) => {
-    if ('Spotify' in window) {
+    window.onSpotifyWebPlaybackSDKReady = () => {
       resolve();
-    } else {
-      window.onSpotifyWebPlaybackSDKReady = () => {
-        resolve();
-      };
-    }
+    };
   });
 
-  setupPlayerEvents = async () => {
+  setupPlayer = async () => {
     await this.waitForSpotify();
-    const { accessToken } = this.state;
     const {
-      volume, name, playerIsReady, setPlayerDeviceID,
+      accessToken, volume, name, playerIsReady,
     } = this.props;
     const playerOptions = {
       name,
@@ -73,25 +42,29 @@ class SpotifyPlayer extends Component {
       volume,
     };
     const player = new window.Spotify.Player(playerOptions);
-    this.setState({ player });
+    this.player = player;
 
     player.on('ready', ({ device_id }) => {
-      setPlayerDeviceID(device_id);
+      this.deviceID = device_id;
       playerIsReady();
     });
 
     player.connect();
   };
 
-  play = (deviceId) => {
+  play = (deviceId, songURIs) => {
     const url = new URL('https://api.spotify.com/v1/me/player/play');
-    const { accessToken } = this.state;
-    console.log(accessToken);
     url.search = new URLSearchParams({ device_id: deviceId });
+
+    const { accessToken } = this.props;
+
+    const body = {
+      uris: songURIs,
+    };
+
     fetch(url, {
       method: 'PUT',
-      // mode: 'no-cors',
-      body: '{"uris": ["spotify:track:5ya2gsaIhTkAuWYEMB0nw5"]}',
+      body: JSON.stringify(body),
       headers: new Headers({
         Authorization: `Bearer ${accessToken}`,
       }),
@@ -99,7 +72,49 @@ class SpotifyPlayer extends Component {
   };
 
   render() {
-    return <div />;
+    return (
+      <div className="row">
+        <div className="col s6 offset-s4">
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              if (this.player) this.player.previousTrack();
+            }}
+          >
+            <i className="material-icons">fast_rewind</i>
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              this.player.getCurrentState().then((state) => {
+                console.log(state);
+                if (!state && this.props.playlist.length > 0) {
+                  const songURIs = this.props.playlist.map(song => song.song.track_uri);
+                  this.play(this.deviceID, songURIs);
+                } else if (state.paused) {
+                  this.player.resume();
+                } else {
+                  this.player.pause();
+                }
+              });
+            }}
+          >
+            <i className="material-icons">play_circle_filled</i>
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              if (this.player) this.player.nextTrack();
+            }}
+          >
+            <i className="material-icons">fast_forward</i>
+          </button>
+        </div>
+      </div>
+    );
   }
 }
 
@@ -108,7 +123,6 @@ SpotifyPlayer.propTypes = {
   name: PropTypes.string.isRequired,
   volume: PropTypes.number.isRequired,
   playerIsReady: PropTypes.func.isRequired,
-  setPlayerDeviceID: PropTypes.func.isRequired,
 };
 
 export default SpotifyPlayer;
