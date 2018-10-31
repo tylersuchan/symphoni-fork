@@ -5,7 +5,6 @@ import Login from '../Login';
 import SpotifyPlayer from '../SpotifyPlayer';
 import SpotifySearch from '../SpotifyPlayer/SpotifySearch';
 import config from '../../config';
-import './QueueContainer.css';
 
 class QueueContainer extends Component {
   constructor(props) {

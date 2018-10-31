@@ -6,8 +6,6 @@ import json
 
 
 class Party(Resource):
-    print()
-
     def get(self, name):
         code = name
         if not code in persistence.db:

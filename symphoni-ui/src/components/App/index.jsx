@@ -38,6 +38,7 @@ class App extends Component {
       isHost,
     };
 
+  render() {
     return (
       <div>
         <HomeContainer />
