@@ -30,14 +30,12 @@ class JoinPartyContainer extends Component {
                     // IF code found is true toast returns Found Code!
                   >
                     {this.state.codeFound === true && (
-                     <button onClick={() => {window.Materialize.toast('Success! Proceeding to Queue', 10000)} } />
-                     )
+                     window.Materialize.toast('Success! Proceeding to Queue', 5000 ))
                     }
                   
                    // IF code not found toast returns Error, should send a delete all down to the child
                    {this.state.codeFound === false && (
-                     <button onClick={() => {window.Materialize.toast('Error Incorrect Input!', 10000)} }/>
-                     )
+                     window.Materialize.toast('Error Incorrect Input!', 5000))
                     }
                   </PartyCodeInput>
                   <label htmlFor="join-code" />

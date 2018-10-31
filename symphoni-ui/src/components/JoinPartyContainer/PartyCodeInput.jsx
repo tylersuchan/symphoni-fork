@@ -13,9 +13,8 @@ class PartyCodeInput extends Component {
     checkCode= (event) => {
         event.preventDefault();
         const {userCode} = this.state;
-        //localhost::5000/party/"ARRAY"
         console.log(userCode);
-        const partyURI = `http://127.0.0.1:5000/party/${userCode.join("")}`;
+        const partyURI = `${config.url}party/${userCode.join("")}`;
         console.log(partyURI);
         fetch(partyURI, {
             method: 'GET',
@@ -44,7 +43,6 @@ class PartyCodeInput extends Component {
         });
     }
 
-
     render(){
         return (
             <div>
@@ -54,7 +52,6 @@ class PartyCodeInput extends Component {
                 <UserInput idx='3' onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
                 <UserInput idx='4' onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
                 <UserInput idx='5' onChange={this.arrayHandler} onKeyPress={this.checkCode}/>
-                {/* <a className="waves-effect waves-light btn-small" onClick = {this.clearInput}>CLEAR</a><br></br> */}
                 <a className="waves-effect waves-light btn-small" onClick={this.checkCode}><i className="material-icons">arrow_drop_down</i></a>
                 
             </div>

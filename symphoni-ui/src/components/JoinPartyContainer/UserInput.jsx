@@ -48,11 +48,11 @@ class UserInput extends Component {
     }
 
     handleError = (event) =>{
-        console.log(this.props.foundError);
         if(this.props.foundError){
             this.setState({value : "_"});
         }
     }
+    
     render() { 
         return (  
             <input 
