@@ -15,17 +15,12 @@ class PartyCodeInput extends Component {
   checkCode = (event) => {
     event.preventDefault();
     const { userCode } = this.state;
-    console.log(userCode);
     const partyURI = `${config.url}party/${userCode.join('')}`;
 
-    console.log(partyURI);
     fetch(partyURI, {
       method: 'GET',
     }).then(response => response.json().then((data) => {
-      const { setPartyCode, setPartyName } = this.props;
       if (data.code) {
-        setPartyCode(data.code);
-        setPartyName(data.party_data.name);
         this.props.changeFoundStatus(true, data.code, data.party_data.name);
       } else {
         this.props.changeFoundStatus(false);

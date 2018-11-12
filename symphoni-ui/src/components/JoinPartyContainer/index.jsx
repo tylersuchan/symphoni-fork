@@ -26,9 +26,9 @@ class JoinPartyContainer extends Component {
                   <PartyCodeInput
                     changeFoundStatus={(status, code, name) => {
                       this.setState({ codeFound: status, partyCode: code, partyName: name });
-                      const { setPartyCode, setPartyName } = this.props;
-                      setPartyCode(code);
-                      setPartyName(name);
+                      const { partyCode, partyName } = this.props;
+                      partyCode(code);
+                      partyName(name);
                     }}
                   >
                     {this.state.codeFound === true

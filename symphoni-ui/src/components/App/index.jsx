@@ -16,17 +16,14 @@ class App extends Component {
 
   changePartyName = (newPartyName) => {
     this.setState({ partyName: newPartyName });
-    console.log(this.state.partyCode);
+    console.log(this.state.partyName);
   };
 
   render() {
     return (
       <div>
         <HomeContainer />
-        <JoinPartyContainer
-          setPartyCode={this.changePartyCode}
-          setPartyName={this.changePartyName}
-        />
+        <JoinPartyContainer partyCode={this.changePartyCode} partyName={this.changePartyName} />
       </div>
     );
   }

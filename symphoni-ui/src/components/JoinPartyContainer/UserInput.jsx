@@ -6,7 +6,7 @@ class UserInput extends Component {
     super(props);
     this.state = {
       value: '_',
-      backSpaceCounts: 0,
+      backSpaceCounts: false,
     };
     this.baseState = '_';
   }
@@ -41,12 +41,15 @@ class UserInput extends Component {
     if (event.key === 'Backspace') {
       event.preventDefault();
       this.myTextInput.value = '';
-      this.setState(prevState => ({ backSpaceCounts: prevState.count + 1, value: ' ' }));
+      this.setState({ backSpaceCounts: true });
       this.props.onChange(this.props.idx, event);
-      if (this.state.backSpaceCounts % 2 === 0) {
-        if (this.myTextInput.previousSibling) {
-          this.myTextInput.previousSibling.focus();
-        }
+      if (
+        this.myTextInput.previousSibling
+        && this.state.backSpaceCounts % 1 === 0
+        && this.state.backSpaceCounts > 0
+      ) {
+        this.setState({ backSpaceCounts: false });
+        this.myTextInput.previousSibling.focus();
       }
     }
 
