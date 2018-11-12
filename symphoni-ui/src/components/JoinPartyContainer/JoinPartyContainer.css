@@ -1,32 +1,31 @@
 input {
-    text-rendering: auto;
-    color: initial;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    display: inline-block;
-    border-bottom: none !important;
-    width: 16.66% !important; 
-    text-align: center;
-
+  text-rendering: auto;
+  color: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-transform: none;
+  text-indent: 0px;
+  text-shadow: none;
+  display: inline-block;
+  border-bottom: none !important;
+  width: 16.66% !important;
+  text-align: center;
 }
 
 input:focus {
-    border-bottom: none !important;
-    box-shadow: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
 UserInput:focus {
-    border-bottom: none !important;
-    box-shadow: none !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
 }
 
-input::placeholder{
-    opacity: 1;
-    color:black;
-    text-align: center;
+input::placeholder {
+  opacity: 1;
+  color: black;
+  text-align: center;
 }
 
 /* .page-header {

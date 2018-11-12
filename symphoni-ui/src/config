@@ -1,6 +1,6 @@
 export default {
- url: 'http://127.0.0.1:3000/',
+ url: 'http://127.0.0.1:5000/',
  spotify_client_id: 'd8df653f9e4f4484a9b5486eb3f33db3',
  spotify_client_secret: '19dc8db3949848eab2ad467a670aa602',
- redirect_uri: 'http://localhost:3000',
+ redirect_uri: 'http://localhost:5000',
 };
