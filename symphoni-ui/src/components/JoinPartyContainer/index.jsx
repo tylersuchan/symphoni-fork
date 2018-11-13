@@ -8,8 +8,6 @@ class JoinPartyContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      partyCode: '',
-      partyName: '',
       codeFound: null,
     };
   }
@@ -24,11 +22,10 @@ class JoinPartyContainer extends Component {
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
                   <PartyCodeInput
-                    changeFoundStatus={(status, code, name) => {
-                      this.setState({ codeFound: status, partyCode: code, partyName: name });
-                      const { partyCode, partyName } = this.props;
-                      partyCode(code);
-                      partyName(name);
+                    changeFoundStatus={(status, code) => {
+                      this.setState({ codeFound: status });
+                      const { setParty } = this.props;
+                      setParty(code);
                     }}
                   >
                     {this.state.codeFound === true
@@ -48,8 +45,7 @@ class JoinPartyContainer extends Component {
 }
 
 JoinPartyContainer.propTypes = {
-  setPartyCode: PropTypes.func.isRequired,
-  setPartyName: PropTypes.func.isRequired,
+  setParty: PropTypes.func.isRequired,
 };
 
 export default JoinPartyContainer;

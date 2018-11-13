@@ -14,24 +14,31 @@ class PartyCodeInput extends Component {
 
   checkCode = (event) => {
     event.preventDefault();
+
     const { userCode } = this.state;
+    const { changeFoundStatus } = this.props;
+    console.log(userCode);
     const partyURI = `${config.url}party/${userCode.join('')}`;
 
     fetch(partyURI, {
       method: 'GET',
     }).then(response => response.json().then((data) => {
       if (data.code) {
-        this.props.changeFoundStatus(true, data.code, data.party_data.name);
+        changeFoundStatus(true, data.code);
       } else {
-        this.props.changeFoundStatus(false);
-        this.setState({ userCode: [], codeFound: false });
+        changeFoundStatus(false, []);
       }
     }));
   };
 
   arrayHandler = (i, event) => {
-    const inputVals = this.state.userCode.slice();
-    inputVals[i] = event.target.value.toUpperCase();
+    const { userCode } = this.state;
+    const inputVals = userCode.slice();
+    if (event.target) {
+      inputVals[i] = event.target.value.toUpperCase();
+    } else {
+      inputVals[i] = event.key;
+    }
     this.setState({ userCode: inputVals });
   };
 

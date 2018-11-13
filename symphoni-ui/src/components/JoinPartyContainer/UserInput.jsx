@@ -5,8 +5,8 @@ class UserInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: '_',
-      backSpaceCounts: false,
+      startValue: '_',
+      backSpaceCount: 0,
     };
     this.baseState = '_';
   }
@@ -14,41 +14,54 @@ class UserInput extends Component {
   handleInput = (event) => {
     if (event.target.value) {
       const { value } = event.target;
-      this.setState({ value: event.target.value });
-      this.props.onChange(this.props.idx, event);
+      const { onChange, idx } = this.props;
+      this.setState({ startValue: value });
+      onChange(idx, event);
       if (value.length === 1 || value.length === 0) {
-        if (this.myTextInput.nextSibling) {
+        if (this.myTextInput.nextSibling && this.myTextInput.nextSibling.value === '') {
           this.myTextInput.nextSibling.focus();
         }
       }
     } else {
-      this.setState({ value: event.key });
-      this.props.onChange(this.props.idx, event.key);
+      this.setState({ startValue: event.key });
+      this.props.onChange(this.props.idx, event);
     }
   };
 
   handlePress = (event) => {
     // BACKSPACE EVENT- Deletes value(Sets its value back to), then moves focus backward and
 
-    // if ((event.key >= 48 && event.key <= 57) || (event.keyCode >= 65 && event.keyCode <= 90)) {
-    //   event.preventDefault();
-    //   this.myTextInput.value = event.key;
-    //   if (this.myTextInput.nextSibling) {
-    //     this.myTextInput.nextSibling.focus();
-    //   }
-    // }
+    if (
+      (event.keyCode >= 48 && event.keyCode <= 57)
+      || (event.keyCode >= 65 && event.keyCode <= 90)
+    ) {
+      event.preventDefault();
+      const { value } = event.target;
+      const { onChange, idx } = this.props;
+      this.setState({ startValue: value });
+      this.myTextInput.value = event.key;
+      onChange(idx, event);
+      if (this.myTextInput.nextSibling) {
+        this.myTextInput.nextSibling.focus();
+      }
+    }
 
     if (event.key === 'Backspace') {
       event.preventDefault();
+      const { onChange } = this.props;
+      const { backSpaceCount } = this.state;
       this.myTextInput.value = '';
-      this.setState({ backSpaceCounts: true });
-      this.props.onChange(this.props.idx, event);
+      this.setState(preState => ({
+        backSpaceCount: preState.backSpaceCount + 1,
+        value: '',
+      }));
+      onChange(this.props.idx, event);
       if (
         this.myTextInput.previousSibling
-        && this.state.backSpaceCounts % 1 === 0
-        && this.state.backSpaceCounts > 0
+        && backSpaceCount % 2 === 1
+        && backSpaceCount > 0
+        && this.myTextInput.previousSibling
       ) {
-        this.setState({ backSpaceCounts: false });
         this.myTextInput.previousSibling.focus();
       }
     }
@@ -70,8 +83,9 @@ class UserInput extends Component {
   };
 
   handleError = (event) => {
-    if (this.props.foundError) {
-      this.setState({ value: '_' });
+    const { foundError } = this.props;
+    if (foundError) {
+      this.setState({ startValue: '_' });
     }
   };
 
@@ -85,7 +99,6 @@ class UserInput extends Component {
         onKeyDown={this.handlePress}
         placeholder="_"
         maxLength="1"
-        // onKeyPress={this.handlePress}
         style={{ textTransform: 'uppercase' }}
       />
     );
