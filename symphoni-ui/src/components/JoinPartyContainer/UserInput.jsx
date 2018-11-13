@@ -48,14 +48,14 @@ class UserInput extends Component {
 
     if (event.key === 'Backspace') {
       event.preventDefault();
-      const { onChange } = this.props;
+      const { onChange, idx } = this.props;
       const { backSpaceCount } = this.state;
       this.myTextInput.value = '';
       this.setState(preState => ({
         backSpaceCount: preState.backSpaceCount + 1,
         value: '',
       }));
-      onChange(this.props.idx, event);
+      onChange(idx, event);
       if (
         this.myTextInput.previousSibling
         && backSpaceCount % 2 === 1

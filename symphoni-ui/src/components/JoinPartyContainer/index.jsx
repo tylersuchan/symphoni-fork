@@ -18,12 +18,14 @@ class JoinPartyContainer extends Component {
         <div className="container" id="join-party">
           <div className="row">
             <div className="center" id="join">
-              <h3> Enter Room Code: </h3>
+              <h3> Room Code: </h3>
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
                   <PartyCodeInput
-                    changeFoundStatus={(status, code) => {
+                    changeFoundStatus={(status) => {
                       this.setState({ codeFound: status });
+                    }}
+                    changePartyStatus={(code) => {
                       const { setParty } = this.props;
                       setParty(code);
                     }}
@@ -32,7 +34,7 @@ class JoinPartyContainer extends Component {
                       && window.Materialize.toast('Success! Proceeding to Queue', 4000)}
 
                     {this.state.codeFound === false
-                      && window.Materialize.toast('Error Incorrect Input!', 4000)}
+                      && window.Materialize.toast('Error Incorrect Input! Please Try Again', 4000)}
                   </PartyCodeInput>
                 </div>
               </div>

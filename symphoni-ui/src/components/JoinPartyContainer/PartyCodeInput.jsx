@@ -17,7 +17,6 @@ class PartyCodeInput extends Component {
 
     const { userCode } = this.state;
     const { changeFoundStatus } = this.props;
-    console.log(userCode);
     const partyURI = `${config.url}party/${userCode.join('')}`;
 
     fetch(partyURI, {
@@ -25,8 +24,10 @@ class PartyCodeInput extends Component {
     }).then(response => response.json().then((data) => {
       if (data.code) {
         changeFoundStatus(true, data.code);
+        // changePartyStatus(data.code);
       } else {
         changeFoundStatus(false, []);
+        // changePartyStatus([]);
       }
     }));
   };
