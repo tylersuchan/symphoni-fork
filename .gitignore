@@ -2,6 +2,7 @@
 
 # dependencies
 symphoni-ui/node_modules
+symphoni-ui/bower_components
 
 # testing
 /coverage
