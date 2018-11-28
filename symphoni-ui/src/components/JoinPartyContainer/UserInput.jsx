@@ -89,6 +89,7 @@ class UserInput extends Component {
     return (
       <input
         // Reference used to focus on different elements
+        className="join"
         ref={(input) => {
           this.myTextInput = input;
         }}
