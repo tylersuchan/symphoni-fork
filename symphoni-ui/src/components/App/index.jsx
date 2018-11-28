@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
-import QueueContainer from '../QueueContainer';
 import JoinPartyContainer from '../JoinPartyContainer';
+import QueueContainer from '../QueueContainer';
 import config from '../../config';
 
 class App extends Component {
@@ -55,7 +55,7 @@ class App extends Component {
             this.setState({ isHost: !isHost });
           }}
         />
-        <JoinPartyContainer />
+        <JoinPartyContainer setParty={this.changePartyCode} />
         <QueueContainer {...queueProps} />
       </div>
     );
