@@ -1,6 +1,0 @@
-/* widths */
-@each $name, $size in $widths {
-  .w#{$name} {
-    width: $size !important;
-  }
-}
