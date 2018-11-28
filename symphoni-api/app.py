@@ -5,6 +5,7 @@ from resources.party import Party
 from resources.song import Song
 from resources.playlist import Playlist
 from resources.token import Token
+from resources.user import User
 from spotify_auth import spotify_auth
 import persistence
 
@@ -21,6 +22,7 @@ api.add_resource(Party, '/party/<string:name>')
 api.add_resource(Song, '/party/<string:code>/song')
 api.add_resource(Playlist, '/party/<string:code>/playlist')
 api.add_resource(Token, '/token/<string:code>')
+api.add_resource(User,'/party/<string:code>/user')
 
 if __name__ == '__main__':
     app.run(debug=True)
