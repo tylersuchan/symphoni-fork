@@ -58,8 +58,3 @@ class Playlist(Resource):
                                                ["playlist"] if song.get("song").get("track_uri") != args["track_uri"]]
 
         return {'code': code, 'party_data': persistence.db[code]}, 202
-
-        persistence.db[code]["playlist"][:] = [song for song in persistence.db[code]
-                                               ["playlist"] if song.get("song").get("track_uri") != args["track_uri"]]
-
-        return {'code': code, 'party_data': persistence.db[code]}

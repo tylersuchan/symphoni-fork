@@ -39,7 +39,7 @@ class Token(Resource):
             spotify_settings['spotifyClientId'], spotify_settings['spotifyClientSecret'])
 
         authorization = "Basic {}".format(
-            base64.standard_b64encode(encoded_ids.encode()))
+            base64.standard_b64encode(encoded_ids.encode()).decode('utf-8'))
 
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
