@@ -3,6 +3,7 @@ import HomeContainer from '../HomeContainer';
 import StartPartyContainer from '../StartPartyContainer';
 import JoinPartyContainer from '../JoinPartyContainer';
 import QueueContainer from '../QueueContainer';
+import FooterComponent from '../FooterComponent';
 import config from '../../config';
 
 class App extends Component {
@@ -57,6 +58,7 @@ class App extends Component {
         />
         <JoinPartyContainer setParty={this.changePartyCode} />
         <QueueContainer {...queueProps} />
+        <FooterComponent />
       </div>
     );
   }
