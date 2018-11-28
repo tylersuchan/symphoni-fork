@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Container from '../Util/Container';
 import Login from '../Login';
 import SpotifyPlayer from '../SpotifyPlayer';
-import SpotifySearch from '../SpotifyPlayer/SpotifySearch';
+import SpotifySearch from '../SpotifySearch';
 import config from '../../config';
 
 class QueueContainer extends Component {
@@ -12,7 +12,7 @@ class QueueContainer extends Component {
     this.state = {
       playlist: [],
       playerIsReady: false,
-      accessToken: undefined,
+      accessToken: localStorage.getItem('accessToken'),
     };
   }
 
@@ -34,6 +34,19 @@ class QueueContainer extends Component {
     }
   };
 
+  deleteFromPlaylist = (track_uri) => {
+    const { partyCode } = this.props;
+    const url = new URL(`${config.url}party/${partyCode}/playlist`);
+    url.search = new URLSearchParams({ track_uri });
+    fetch(url, {
+      method: 'DELETE',
+    }).then(response => response.json().then((data) => {
+      if (response.ok) {
+        this.setState({ playlist: data.party_data.playlist });
+      }
+    }));
+  };
+
   render() {
     const { accessToken, playlist, playerIsReady } = this.state;
     const { partyCode, partyName } = this.props;
@@ -50,7 +63,7 @@ class QueueContainer extends Component {
     };
 
     const songs = playlist.map(song => (
-      <div className="row queue-entry">
+      <div className="row queue-entry" key={song.song.track_uri}>
         <div className="col s2">
           <img
             className="responsive-img"
@@ -58,31 +71,45 @@ class QueueContainer extends Component {
             alt={song.song.album_information.album_name}
           />
         </div>
-        <div className="col s10 max-height valign-wrapper">
+        <div className="col s8 max-height valign-wrapper">
           <div className="col s4">{song.song.track}</div>
           <div className="col s4">{song.song.artist_information[0].artist_name}</div>
           <div className="col s4">{song.song.album_information.album_name}</div>
         </div>
+        <div className="col s2">
+          <button
+            type="button"
+            onClick={() => {
+              this.deleteFromPlaylist(song.song.track_uri);
+            }}
+          >
+            DELETE
+          </button>
+        </div>
       </div>
     ));
+
+    const setAccessToken = (newAccessToken) => {
+      localStorage.setItem('accessToken', newAccessToken);
+      this.setState({ accessToken: newAccessToken });
+    };
 
     return (
       <Container id="queue">
         {!accessToken && (
           <Fragment>
-            <Login
-              setAccessToken={(newAccessToken) => {
-                this.setState({ accessToken: newAccessToken });
-              }}
-              partyCode={partyCode}
-            />
+            <Login partyCode={partyCode} setAccessToken={setAccessToken} />
           </Fragment>
         )}
         {accessToken && (
           <Fragment>
             <div className="row grey lighten-3">
               <div className="col s4">
-                <SpotifySearch partyCode={partyCode} updatePlaylist={this.updatePlaylist} />
+                <SpotifySearch
+                  partyCode={partyCode}
+                  updatePlaylist={this.updatePlaylist}
+                  setAccessToken={setAccessToken}
+                />
               </div>
               <div className="col s4 center">
                 <h5>{`${partyName}'s Playlist`}</h5>
