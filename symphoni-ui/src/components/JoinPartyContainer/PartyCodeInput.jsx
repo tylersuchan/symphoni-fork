@@ -8,10 +8,12 @@ class PartyCodeInput extends Component {
     super(props);
     this.state = {
       userCode: Array(6),
-      codeFound: null,
     };
   }
 
+  // Calls backend API and URI to check if code is found
+  // If URI has data, we know the code is in there, and we push the status up to the parent
+  // ** NEEDS BACKEND ON AND RUNNING TO WORK **
   checkCode = (event) => {
     event.preventDefault();
 
@@ -24,14 +26,16 @@ class PartyCodeInput extends Component {
     }).then(response => response.json().then((data) => {
       if (data.code) {
         changeFoundStatus(true, data.code);
-        // changePartyStatus(data.code);
       } else {
+        this.setState({ userCode: Array(6) });
         changeFoundStatus(false, []);
-        // changePartyStatus([]);
+        return false;
       }
     }));
   };
 
+  // Places values into array UpperCase since all party codes are uppercase with numbers
+  // There are two events, one with a target and one with a key depending on how the user inputs the values
   arrayHandler = (i, event) => {
     const { userCode } = this.state;
     const inputVals = userCode.slice();
@@ -41,10 +45,6 @@ class PartyCodeInput extends Component {
       inputVals[i] = event.key;
     }
     this.setState({ userCode: inputVals });
-  };
-
-  handleClick = () => {
-    this.setState({ userCode: [] });
   };
 
   render() {
@@ -59,9 +59,11 @@ class PartyCodeInput extends Component {
         <a className="waves-effect waves-light btn-small" onClick={this.checkCode}>
           <i className="material-icons">arrow_drop_down</i>
         </a>
-        <a className="waves-effect waves-light btn-small" onClick={this.handleClick}>
+        {/*
+          Current Method of Clearing Values, Needs to Be Implemented :(
+         <a className="waves-effect waves-light btn-small" onClick={this.handleClick}>
           <i className="material-icons">clear</i>
-        </a>
+        </a> */}
       </div>
     );
   }

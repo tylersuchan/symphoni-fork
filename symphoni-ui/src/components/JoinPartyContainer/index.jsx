@@ -22,6 +22,7 @@ class JoinPartyContainer extends Component {
               <div className="flex-container">
                 <div className="flex-horizontal-center input-field col s6">
                   <PartyCodeInput
+                    // Grabs Status from child if it did or didn't find the code
                     changeFoundStatus={(status) => {
                       this.setState({ codeFound: status });
                     }}
@@ -30,6 +31,7 @@ class JoinPartyContainer extends Component {
                       setParty(code);
                     }}
                   >
+                    {/* Checks if code is correct in child, if it is, pops up a success toast */}
                     {this.state.codeFound === true
                       && window.Materialize.toast('Success! Proceeding to Queue', 4000)}
 

@@ -31,3 +31,7 @@ __pycache__
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+#PyCache
+/symphoni-api/__pycache__/
+/symphoni-api/resources/__pycache__/

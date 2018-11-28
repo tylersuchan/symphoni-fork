@@ -11,12 +11,15 @@ class UserInput extends Component {
     this.baseState = '_';
   }
 
+  // When input placed sets the onChange method to set value in array
+
   handleInput = (event) => {
     if (event.target.value) {
       const { value } = event.target;
       const { onChange, idx } = this.props;
       this.setState({ startValue: value });
       onChange(idx, event);
+
       if (value.length === 1 || value.length === 0) {
         if (this.myTextInput.nextSibling && this.myTextInput.nextSibling.value === '') {
           this.myTextInput.nextSibling.focus();
@@ -29,8 +32,7 @@ class UserInput extends Component {
   };
 
   handlePress = (event) => {
-    // BACKSPACE EVENT- Deletes value(Sets its value back to), then moves focus backward and
-
+    // Overwrite current value with key press, allows dynamic switching of values in case user inserted an incorrect value
     if (
       (event.keyCode >= 48 && event.keyCode <= 57)
       || (event.keyCode >= 65 && event.keyCode <= 90)
@@ -45,7 +47,8 @@ class UserInput extends Component {
         this.myTextInput.nextSibling.focus();
       }
     }
-
+    // BACKSPACE EVENT- Deletes value(Sets its value back to)
+    // If press backspace deletes the value in the box, if you press it twice it will transition to the previous value
     if (event.key === 'Backspace') {
       event.preventDefault();
       const { onChange, idx } = this.props;
@@ -82,16 +85,10 @@ class UserInput extends Component {
     }
   };
 
-  handleError = (event) => {
-    const { foundError } = this.props;
-    if (foundError) {
-      this.setState({ startValue: '_' });
-    }
-  };
-
   render() {
     return (
       <input
+        // Reference used to focus on different elements
         ref={(input) => {
           this.myTextInput = input;
         }}
