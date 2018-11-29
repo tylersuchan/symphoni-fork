@@ -10,12 +10,10 @@ class Container extends Component {
   }
 
   render() {
-    const { children, id } = this.props;
+    const { children, id, className } = this.props;
     return (
-      <div className="container scrollspy" id={id}>
-        <div className="row">
-          {children}
-        </div>
+      <div className={`container scrollspy ${className}`} id={id}>
+        <div className="row">{children}</div>
       </div>
     );
   }
@@ -23,7 +21,8 @@ class Container extends Component {
 
 Container.propTypes = {
   children: PropTypes.node.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default Container;

@@ -14,7 +14,7 @@ class JoinPartyContainer extends Component {
 
   render() {
     return (
-      <Container id="join">
+      <Container id="join" className="page-header">
         <div className="container" id="join-party">
           <div className="row">
             <div className="center" id="join">

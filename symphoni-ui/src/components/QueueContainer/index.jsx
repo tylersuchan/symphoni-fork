@@ -95,7 +95,7 @@ class QueueContainer extends Component {
     };
 
     return (
-      <Container id="queue">
+      <Container id="queue" className="page-header">
         {!accessToken && (
           <Fragment>
             <Login partyCode={partyCode} setAccessToken={setAccessToken} />

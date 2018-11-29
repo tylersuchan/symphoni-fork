@@ -23,7 +23,7 @@ class StartPartyContainer extends Component {
 
   render() {
     return (
-      <Container id="start">
+      <Container id="start" className="page-header">
         <div className="center" id="start-party">
           <h3> Start Party Here!</h3>
           <h5> Insert Party Name</h5>
