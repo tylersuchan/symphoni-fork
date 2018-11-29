@@ -52,5 +52,3 @@ class Party(Resource):
             abort(500, message="Something went horribly wrong")
 
         return {"message": "Delete Successful"}, 200
-
-        return {"message": "Delete Successful"}, 200
