@@ -19,7 +19,7 @@ class Party(Resource):
             string.ascii_uppercase + string.digits, k=6))
 
         persistence.db[code] = {'name': name,
-                                'playlist': [], 'spotify_token_details': {}}
+                'playlist': [], 'spotify_token_details': {}, 'users': []}
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 201
 
