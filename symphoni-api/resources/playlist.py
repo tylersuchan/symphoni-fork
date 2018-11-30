@@ -33,7 +33,10 @@ class Playlist(Resource):
 
         playlist_item = {
             "song": song,
-            "vote": 0
+            "vote": 0,
+            #new field - keeps track of what user voted for this song so one user can't vote multiple times
+            #Will be a list of dictionaries. Key is user, value is "up" or "down" -T.S. 11/29/2018
+            "user_votes": []
         }
 
         persistence.db[code]["playlist"].append(playlist_item)

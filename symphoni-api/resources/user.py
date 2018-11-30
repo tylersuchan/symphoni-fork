@@ -45,6 +45,7 @@ class User(Resource):
         if args['username'] in persistence.db[code]['users']:
             abort(400, message="User already exists please specify new username")
 
+        correctUsername = args['username'].replace("\"","")
         persistence.db[code]['users'].append(args['username'])
 
         return {"message": "User has been added"},200

@@ -6,9 +6,7 @@ class TestSongAPI(unittest.TestCase):
 
     def setUp(self):
 
-        header = { 'Content-Type': 'application/json' }
-        data = {"access_token": "BQBbUtO0zNoA1Z-a5PMrWgFr2heUMEtp_z1DFS0SGSL3LCkuYbDi1qmiqVvGhRi1qOv46OkmpFJvH3j5CE0d4nnZYQr4-qsXDZu8_945M7pRb5yZoAhWOkKRPNNvWgVmqQBvkii1pr2kIut8ML9a27_q6jhe7J35PHAFq7JLwMmOFM7b8Xk", "expires_in": 3600, "refresh_token": "AQDc6dM6K8dOkVvGnZVEjCjraH6N5M6s_OE3kbeUAGs1jtqNH1gQPdW9C99GQDK6SUDhw1g522hfR38KCxbs6vway8vfwGVIZY1uXcaeDIFDeceP6u62uzSSMmc1AMia6vPOXA"}
-        party = requests.put('http://localhost:5000/party/TEST', headers=header, json=data)
+        party = requests.put('http://localhost:5000/party/TEST')
         partyCodeJSON = party.json()
         partyCode = json.dumps(partyCodeJSON["code"])
         self.code = partyCode.replace("\"","")
@@ -51,27 +49,27 @@ class TestSongAPI(unittest.TestCase):
 
     def test_get_song_album(self):
 
-        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song/?track=Umbrella')
+        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song?track=Umbrella')
+        print(song_info.json())
+        #print(song_info.json()["results"][0]["album_information"]["album_name"])
         assert "Good Girl Gone Bad: Reloaded" in song_info.json()["results"][0]["album_information"]["album_name"]
 
     def test_get_song_artist(self):
 
-        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song/?track=Umbrella')
+        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song?track=Umbrella')
         assert "Rihanna" in song_info.json()["results"][0]["artist_information"][0]["artist_name"]
 
     def test_get_song_release_date(self):
 
-        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song/?track=Umbrella')
+        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song?track=Umbrella')
         assert "2008-06-02" in song_info.json()["results"][0]["album_information"]["album_release_date"]
 
     def test_get_song_track(self):
 
-        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song/?track=Umbrella')
+        song_info = requests.get('http://localhost:5000/party/'+self.code+'/song?track=Umbrella')
         print(song_info.json()["results"][0])
-        assert "Umbrella" in song_info.json()["results"][0]["track"] 
+        assert "Umbrella" in song_info.json()["results"][0]["track"]
 
 
 if __name__ == "__main__":
     unittest.main()
-
-
