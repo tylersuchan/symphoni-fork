@@ -49,7 +49,9 @@ class QueueContainer extends Component {
 
   render() {
     const { accessToken, playlist, playerIsReady } = this.state;
-    const { partyCode, partyName } = this.props;
+    const {
+      partyCode, partyName, inParty, isHost,
+    } = this.props;
 
     const playerProps = {
       partyCode,
@@ -95,50 +97,54 @@ class QueueContainer extends Component {
     };
 
     return (
-      <Container id="queue" className="page-header">
-        {!accessToken && (
+      <div>
+        {inParty && !accessToken && (
           <Fragment>
-            <Login partyCode={partyCode} setAccessToken={setAccessToken} />
+            <Container id="queue" className="fullscreen">
+              <Login partyCode={partyCode} setAccessToken={setAccessToken} />
+            </Container>
           </Fragment>
         )}
-        {accessToken && (
+        {inParty && accessToken && (
           <Fragment>
-            <div className="row grey lighten-3">
-              <div className="col s4">
-                <SpotifySearch
-                  partyCode={partyCode}
-                  updatePlaylist={this.updatePlaylist}
-                  setAccessToken={setAccessToken}
-                />
-              </div>
-              <div className="col s4 center">
-                <h5>{`${partyName}'s Playlist`}</h5>
-              </div>
-              <div className="col s4">
-                <h5>{`Party Code: ${partyCode}`}</h5>
-              </div>
-            </div>
-            <div className="row grey lighten-2 p-s">
-              <div className="row mt-xxs mb-0">
-                <div className="offset-s2 col s10">
-                  <div className="col s4">
-                    <b>Title</b>
-                  </div>
-                  <div className="col s4">
-                    <b>Artist</b>
-                  </div>
-                  <div className="col s4">
-                    <b>Album</b>
-                  </div>
+            <Container id="queue" className="fullscreen">
+              <div className="row grey lighten-3">
+                <div className="col s4">
+                  <SpotifySearch
+                    partyCode={partyCode}
+                    updatePlaylist={this.updatePlaylist}
+                    setAccessToken={setAccessToken}
+                  />
+                </div>
+                <div className="col s4 center">
+                  <h5>{`${partyName}'s Playlist`}</h5>
+                </div>
+                <div className="col s4">
+                  <h5>{`Party Code: ${partyCode}`}</h5>
                 </div>
               </div>
-              <div className="row">{songs}</div>
-            </div>
+              <div className="row grey lighten-2 p-s">
+                <div className="row mt-xxs mb-0">
+                  <div className="offset-s2 col s10">
+                    <div className="col s4">
+                      <b>Title</b>
+                    </div>
+                    <div className="col s4">
+                      <b>Artist</b>
+                    </div>
+                    <div className="col s4">
+                      <b>Album</b>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">{songs}</div>
+              </div>
 
-            <SpotifyPlayer {...playerProps} />
+              <SpotifyPlayer {...playerProps} />
+            </Container>
           </Fragment>
         )}
-      </Container>
+      </div>
     );
   }
 }
@@ -146,7 +152,8 @@ class QueueContainer extends Component {
 QueueContainer.propTypes = {
   partyCode: PropTypes.string,
   partyName: PropTypes.string,
-  isHost: PropTypes.bool,
+  isHost: PropTypes.bool.isRequired,
+  inParty: PropTypes.bool.isRequired,
 };
 
 export default QueueContainer;

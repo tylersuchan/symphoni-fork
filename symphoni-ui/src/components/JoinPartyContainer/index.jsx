@@ -13,8 +13,13 @@ class JoinPartyContainer extends Component {
   }
 
   render() {
+    const { codeFound } = this.state;
+    const {
+      setPartyCode, toggleShowJoin, isHost, inParty,
+    } = this.props;
+
     return (
-      <Container id="join" className="page-header">
+      <Container id="join" className="fullscreen">
         <div className="container" id="join-party">
           <div className="row">
             <div className="center" id="join">
@@ -27,15 +32,16 @@ class JoinPartyContainer extends Component {
                       this.setState({ codeFound: status });
                     }}
                     changePartyStatus={(code) => {
-                      const { setParty } = this.props;
-                      setParty(code);
+                      setPartyCode(code);
                     }}
                   >
                     {/* Checks if code is correct in child, if it is, pops up a success toast */}
-                    {this.state.codeFound === true
-                      && window.Materialize.toast('Success! Proceeding to Queue', 4000)}
+                    {codeFound === true
+                      && window.Materialize.toast('Success! Proceeding to Queue', 4000)
+                      && inParty()
+                      && toggleShowJoin()}
 
-                    {this.state.codeFound === false
+                    {codeFound === false
                       && window.Materialize.toast('Error Incorrect Input! Please Try Again', 4000)}
                   </PartyCodeInput>
                 </div>
@@ -49,7 +55,10 @@ class JoinPartyContainer extends Component {
 }
 
 JoinPartyContainer.propTypes = {
-  setParty: PropTypes.func.isRequired,
+  setPartyCode: PropTypes.func.isRequired,
+  toggleShowJoin: PropTypes.func.isRequired,
+  isHost: PropTypes.func.isRequired,
+  inParty: PropTypes.func.isRequired,
 };
 
 export default JoinPartyContainer;
