@@ -14,9 +14,7 @@ class JoinPartyContainer extends Component {
 
   render() {
     const { codeFound } = this.state;
-    const {
-      setPartyCode, toggleShowJoin, isHost, inParty,
-    } = this.props;
+    const { setPartyCode, setViewState } = this.props;
 
     return (
       <Container id="join" className="fullscreen">
@@ -38,8 +36,7 @@ class JoinPartyContainer extends Component {
                     {/* Checks if code is correct in child, if it is, pops up a success toast */}
                     {codeFound === true
                       && window.Materialize.toast('Success! Proceeding to Queue', 4000)
-                      && inParty()
-                      && toggleShowJoin()}
+                      && setViewState('QUEUE')}
 
                     {codeFound === false
                       && window.Materialize.toast('Error Incorrect Input! Please Try Again', 4000)}
@@ -49,6 +46,16 @@ class JoinPartyContainer extends Component {
             </div>
           </div>
         </div>
+        <button
+          className="btn back-btn pl-m"
+          type="button"
+          onClick={() => {
+            setViewState('HOME');
+          }}
+        >
+          <i className="material-icons back-arrow">arrow_back</i>
+          Go back to selection
+        </button>
       </Container>
     );
   }
@@ -56,9 +63,7 @@ class JoinPartyContainer extends Component {
 
 JoinPartyContainer.propTypes = {
   setPartyCode: PropTypes.func.isRequired,
-  toggleShowJoin: PropTypes.func.isRequired,
-  isHost: PropTypes.func.isRequired,
-  inParty: PropTypes.func.isRequired,
+  setViewState: PropTypes.func.isRequired,
 };
 
 export default JoinPartyContainer;

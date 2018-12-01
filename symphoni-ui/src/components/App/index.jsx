@@ -10,18 +10,17 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    const showHome = localStorage.getItem('showHome');
-    if (showHome === null) {
-      localStorage.setItem('showHome', true);
+    this.validStates = ['HOME', 'START', 'JOIN', 'QUEUE'];
+
+    const allStates = localStorage.getItem('allStates');
+    if (allStates === null) {
+      localStorage.setItem('allStates', JSON.stringify(['HOME']));
     }
 
     this.state = {
       partyCode: localStorage.getItem('partyCode'),
       partyName: localStorage.getItem('partyName'),
-      showHome: localStorage.getItem('showHome') === 'true',
-      showJoin: localStorage.getItem('showJoin') === 'true',
-      showStart: localStorage.getItem('showStart') === 'true',
-      inParty: localStorage.getItem('inParty') === 'true',
+      allStates: JSON.parse(localStorage.getItem('allStates')),
       isHost: false,
     };
   }
@@ -43,73 +42,62 @@ class App extends Component {
 
   render() {
     const {
-      partyName, partyCode, isHost, inParty, showJoin, showStart, showHome,
+      partyName, partyCode, isHost, allStates,
     } = this.state;
 
-    const togglers = {
-      toggleShowHome: () => {
-        this.setState({ showHome: !showHome });
-        localStorage.setItem('showHome', !showHome);
-      },
-      toggleShowStart: () => {
-        this.setState({ showStart: !showStart });
-        localStorage.setItem('showStart', !showStart);
-      },
-      toggleShowJoin: () => {
-        this.setState({ showJoin: !showJoin });
-        localStorage.setItem('showJoin', !showJoin);
-      },
-      toggleIsHost: () => {
-        this.setState({ isHost: !isHost });
-        localStorage.setItem('isHost', !isHost);
-      },
-      toggleInParty: () => {
-        this.setState({ inParty: !inParty });
-        localStorage.setItem('inParty', !inParty);
-      },
+    const setViewState = (newState) => {
+      const newAllStates = allStates.slice();
+      newAllStates.push(newState);
+
+      if (this.validStates.includes(newState)) {
+        this.setState({ allStates: newAllStates });
+        localStorage.setItem('allStates', JSON.stringify(newAllStates));
+      }
     };
 
-    const homeContainerProps = {
-      toggleShowHome: togglers.toggleShowHome,
-      toggleShowStart: togglers.toggleShowStart,
-      toggleShowJoin: togglers.toggleShowJoin,
+    const startPartyContainerProps = {
+      setPartyCode: (newPartyCode) => {
+        this.setState({ partyCode: newPartyCode });
+        localStorage.setItem('partyCode', newPartyCode);
+      },
+      setPartyName: (newPartyName) => {
+        this.setState({ partyName: newPartyName });
+        localStorage.setItem('partyName', newPartyName);
+      },
+      setViewState,
+    };
+
+    const joinPartyContainerProps = {
+      setPartyCode: (newPartyCode) => {
+        this.setState({ partyCode: newPartyCode });
+        localStorage.setItem('partyCode', newPartyCode);
+      },
+      setViewState,
     };
 
     const queueProps = {
       partyCode,
       partyName,
       isHost,
-      inParty,
+      setViewState,
+      allStates,
     };
 
     return (
       <div>
-        {showHome && <HomeContainer {...homeContainerProps} />}
-        {showStart && (
-          <StartPartyContainer
-            setPartyCode={(newPartyCode) => {
-              this.setState({ partyCode: newPartyCode });
-              localStorage.setItem('partyCode', newPartyCode);
-            }}
-            setPartyName={(newPartyName) => {
-              this.setState({ partyName: newPartyName });
-              localStorage.setItem('partyName', newPartyName);
-            }}
-            toggleShowStart={togglers.toggleShowStart}
-            toggleIsHost={togglers.toggleIsHost}
-            toggleInParty={togglers.toggleInParty}
-          />
-        )}
-        {showJoin && (
-          <JoinPartyContainer
-            setPartyCode={(newPartyCode) => {
-              this.setState({ partyCode: newPartyCode });
-              localStorage.setItem('partyCode', newPartyCode);
-            }}
-            toggleShowJoin={togglers.toggleShowJoin}
-          />
-        )}
-        {inParty && <QueueContainer {...queueProps} />}
+        {(() => {
+          switch (allStates[allStates.length - 1]) {
+            case 'HOME':
+              return <HomeContainer setViewState={setViewState} />;
+            case 'START':
+              return <StartPartyContainer {...startPartyContainerProps} />;
+            case 'JOIN':
+              return <JoinPartyContainer {...joinPartyContainerProps} />;
+            case 'QUEUE':
+              return <QueueContainer {...queueProps} />;
+            default:
+          }
+        })()}
         <FooterComponent />
       </div>
     );

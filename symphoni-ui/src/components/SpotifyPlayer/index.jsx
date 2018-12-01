@@ -15,6 +15,7 @@ class SpotifyPlayer extends Component {
       loadingBarPosition: {
         width: '0%',
       },
+      playing: false,
     };
   }
 
@@ -127,7 +128,11 @@ class SpotifyPlayer extends Component {
 
   render() {
     const {
-      nowPlayingData, loadingBarPosition, songCurrentTime, songTotalTime,
+      nowPlayingData,
+      loadingBarPosition,
+      songCurrentTime,
+      songTotalTime,
+      playing,
     } = this.state;
     const { playlist } = this.props;
 
@@ -159,10 +164,15 @@ class SpotifyPlayer extends Component {
                   } else {
                     this.player.pause();
                   }
+                  this.setState({ playing: !playing });
                 });
               }}
             >
-              <i className="material-icons">play_circle_filled</i>
+              {playing ? (
+                <i className="material-icons">pause</i>
+              ) : (
+                <i className="material-icons">play_arrow</i>
+              )}
             </button>
             <button
               type="button"

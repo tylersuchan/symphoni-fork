@@ -1,3 +1,13 @@
 .queue-entry {
   height: 48px;
 }
+
+div.queue-container {
+  position: relative;
+}
+
+button.queue-back-btn {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+}

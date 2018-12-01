@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './HomeContainer.css';
 
 const HomeContainer = (props) => {
-  const { toggleShowStart, toggleShowJoin, toggleShowHome } = props;
+  const { setViewState } = props;
   return (
     <div>
       <header className="fullscreen flex-container">
@@ -13,8 +13,7 @@ const HomeContainer = (props) => {
             href="#start"
             id="start-button"
             onClick={() => {
-              toggleShowStart();
-              toggleShowHome();
+              setViewState('START');
             }}
           >
             Start Party!
@@ -24,8 +23,7 @@ const HomeContainer = (props) => {
             href="#join"
             id="join-button"
             onClick={() => {
-              toggleShowJoin();
-              toggleShowHome();
+              setViewState('JOIN');
             }}
           >
             Join Party
@@ -37,9 +35,7 @@ const HomeContainer = (props) => {
 };
 
 HomeContainer.propTypes = {
-  toggleShowHome: PropTypes.func.isRequired,
-  toggleShowStart: PropTypes.func.isRequired,
-  toggleShowJoin: PropTypes.func.isRequired,
+  setViewState: PropTypes.func.isRequired,
 };
 
 export default HomeContainer;

@@ -4,6 +4,7 @@ import Container from '../Util/Container';
 import Login from '../Login';
 import SpotifyPlayer from '../SpotifyPlayer';
 import SpotifySearch from '../SpotifySearch';
+import './QueueContainer.css';
 import config from '../../config';
 
 class QueueContainer extends Component {
@@ -50,7 +51,7 @@ class QueueContainer extends Component {
   render() {
     const { accessToken, playlist, playerIsReady } = this.state;
     const {
-      partyCode, partyName, inParty, isHost,
+      partyCode, partyName, isHost, setViewState, allStates,
     } = this.props;
 
     const playerProps = {
@@ -96,16 +97,18 @@ class QueueContainer extends Component {
       this.setState({ accessToken: newAccessToken });
     };
 
+    const lastState = allStates[allStates.length - 2];
+
     return (
-      <div>
-        {inParty && !accessToken && (
+      <div className="queue-container">
+        {!accessToken && (
           <Fragment>
             <Container id="queue" className="fullscreen">
               <Login partyCode={partyCode} setAccessToken={setAccessToken} />
             </Container>
           </Fragment>
         )}
-        {inParty && accessToken && (
+        {accessToken && (
           <Fragment>
             <Container id="queue" className="fullscreen">
               <div className="row grey lighten-3">
@@ -144,16 +147,28 @@ class QueueContainer extends Component {
             </Container>
           </Fragment>
         )}
+        <button
+          className="btn queue-back-btn pl-m"
+          type="button"
+          onClick={() => {
+            setViewState(lastState);
+          }}
+        >
+          <i className="material-icons back-arrow">arrow_back</i>
+          Go back to
+          {lastState === 'JOIN' ? ' JOIN' : ' START'}
+        </button>
       </div>
     );
   }
 }
 
 QueueContainer.propTypes = {
-  partyCode: PropTypes.string,
-  partyName: PropTypes.string,
+  partyCode: PropTypes.string.isRequired,
+  partyName: PropTypes.string.isRequired,
   isHost: PropTypes.bool.isRequired,
-  inParty: PropTypes.bool.isRequired,
+  setViewState: PropTypes.func.isRequired,
+  allStates: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default QueueContainer;
