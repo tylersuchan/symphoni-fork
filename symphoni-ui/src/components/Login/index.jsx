@@ -46,7 +46,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="flex-container fullscreen">
+      <div className="flex-container fullscreen ">
         <div className="flex-center">
           <button
             type="button"

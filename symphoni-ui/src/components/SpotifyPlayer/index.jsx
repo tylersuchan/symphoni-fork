@@ -135,8 +135,8 @@ class SpotifyPlayer extends Component {
       <div>
         {nowPlayingData && <NowPlaying nowPlayingData={nowPlayingData} />}
 
-        <div className="row">
-          <div className="col s6 offset-s4 ">
+        <div className="row flex-container">
+          <div className="flex-horizontal-center">
             <button
               type="button"
               className="btn blue-grey"
@@ -166,7 +166,7 @@ class SpotifyPlayer extends Component {
             </button>
             <button
               type="button"
-              className="btn blue-grey"
+              className="btn blue-grey "
               onClick={() => {
                 if (this.player) this.player.nextTrack();
               }}
