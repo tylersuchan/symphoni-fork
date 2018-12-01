@@ -9,7 +9,7 @@ const HomeContainer = (props) => {
       <header className="fullscreen flex-container">
         <div className="flex-center">
           <a
-            className="waves-effect waves-light btn-large z-depth-3"
+            className="mr-s waves-effect waves-light btn-large z-depth-3 blue-grey"
             href="#start"
             id="start-button"
             onClick={() => {
@@ -20,7 +20,7 @@ const HomeContainer = (props) => {
             Start Party!
           </a>
           <a
-            className=" waves-effect waves-light btn-large z-depth-3 "
+            className="ml-s pl-m pr-m waves-effect waves-light btn-large z-depth-3 blue-grey"
             href="#join"
             id="join-button"
             onClick={() => {
@@ -28,7 +28,7 @@ const HomeContainer = (props) => {
               toggleShowHome();
             }}
           >
-            Join Party
+            Join Party!
           </a>
         </div>
       </header>

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import config from '../../config';
+import './SpotifySearch.css';
 
 class SpotifySearch extends Component {
   constructor(props) {
     super(props);
-    this.state = { results: [] };
+    this.state = { results: [], isVisible: false };
   }
 
   searchSpotify = (event) => {
@@ -18,6 +19,9 @@ class SpotifySearch extends Component {
       }).then(response => response.json().then((data) => {
         this.setState({ results: data.results });
       }));
+      // if there is an value(some output) then set background to visible else invisible
+      // !! IS AMAZING #CORRY
+      this.setState({ isVisible: !!event.target.value });
     }
   };
 
@@ -38,17 +42,18 @@ class SpotifySearch extends Component {
       body: JSON.stringify(body),
     }).then(response => response.json().then((data) => {
       updatePlaylist();
+      this.setState({ isVisible: false });
     }));
   };
 
   render() {
-    const { results } = this.state;
-
-    const resultItems = results.slice(0, 5).map(result => (
+    const { results, isVisible } = this.state;
+    const resultItems = results.map(result => (
       <li key={result.track_uri}>
         <div className="row">
           <button
             type="button"
+            className="flex-container btn searchItem"
             onClick={() => {
               this.addSongToPlaylist(result);
               this.setState({ results: [] });
@@ -65,11 +70,11 @@ class SpotifySearch extends Component {
     return (
       <div>
         <input
-          className="max-width"
+          className="max-width typeSearch"
           placeholder="Search For Songs"
           onKeyPress={this.searchSpotify}
         />
-        <ul>{resultItems}</ul>
+        <ul className={`${isVisible ? 'visible' : 'invisible'} centerList`}>{resultItems}</ul>
       </div>
     );
   }

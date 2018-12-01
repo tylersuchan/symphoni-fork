@@ -136,10 +136,10 @@ class SpotifyPlayer extends Component {
         {nowPlayingData && <NowPlaying nowPlayingData={nowPlayingData} />}
 
         <div className="row">
-          <div className="col s6 offset-s4">
+          <div className="col s6 offset-s4 ">
             <button
               type="button"
-              className="btn"
+              className="btn blue-grey"
               onClick={() => {
                 if (this.player) this.player.previousTrack();
               }}
@@ -148,7 +148,7 @@ class SpotifyPlayer extends Component {
             </button>
             <button
               type="button"
-              className="btn"
+              className="btn blue-grey"
               onClick={() => {
                 this.player.getCurrentState().then((state) => {
                   if (!state && playlist.length > 0) {
@@ -166,7 +166,7 @@ class SpotifyPlayer extends Component {
             </button>
             <button
               type="button"
-              className="btn"
+              className="btn blue-grey"
               onClick={() => {
                 if (this.player) this.player.nextTrack();
               }}
@@ -180,8 +180,8 @@ class SpotifyPlayer extends Component {
             <div className="center">
               <div className="col s2">{songCurrentTime}</div>
               <div className="col s8">
-                <div className="progress">
-                  <div className="determinate" style={{ width: loadingBarPosition }} />
+                <div className="progress grey lighten-2">
+                  <div className="determinate light-blue" style={{ width: loadingBarPosition }} />
                 </div>
               </div>
               <div className="col s2">{songTotalTime}</div>

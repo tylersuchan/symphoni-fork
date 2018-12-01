@@ -1,0 +1,41 @@
+.centerList {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  /* padding: 20px; */
+  /* padding-left: 10px; */
+  /* margin: 10px; */
+  height: 18.2em;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: none;
+  background-color: #a4b5bb;
+}
+
+.searchItem {
+  width: 100%;
+  /* padding: 10px; */
+  border-radius: 100px;
+  text-align: center;
+  color: black;
+  background-color: white;
+  background: #e8e8e8;
+}
+
+.searchItem:hover {
+  background-color: #546e7a;
+  color: white;
+}
+
+.typeSearch {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}

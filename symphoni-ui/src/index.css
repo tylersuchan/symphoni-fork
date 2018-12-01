@@ -52,3 +52,14 @@ img {
   height: 100vh;
   width: 100vw;
 }
+
+/* label focus color */
+.input-field input:focus + label {
+  color: #546e7a !important;
+}
+
+/* label underline focus color */
+.row .input-field input:focus {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}

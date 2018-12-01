@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import config from '../../config';
+import './Login.css';
 
 class Login extends Component {
   componentWillMount() {
@@ -45,10 +46,16 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="flex-container">
-        <button type="button" onClick={this.authenticate} className="flex-horizontal-center btn">
-          Login to Spotify
-        </button>
+      <div className="flex-container fullscreen">
+        <div className="flex-center">
+          <button
+            type="button"
+            onClick={this.authenticate}
+            className="flex-horizontal-center btn spotifyLogin"
+          >
+            Login to Spotify
+          </button>
+        </div>
       </div>
     );
   }
