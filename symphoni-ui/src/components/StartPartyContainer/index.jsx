@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Container from '../Util/Container';
 import config from '../../config';
+import './StartPartyContainer.css';
 
 class StartPartyContainer extends Component {
   getPartyCodeOnEnter = (event) => {
@@ -40,6 +41,7 @@ class StartPartyContainer extends Component {
           <div className="flex-horizontal-center input-field col s6">
             <i className="material-icons prefix">music_note</i>
             <input
+              className="enterParty"
               id="join-code"
               type="text"
               onKeyPress={(event) => {

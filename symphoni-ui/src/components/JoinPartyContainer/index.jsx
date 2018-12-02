@@ -18,8 +18,8 @@ class JoinPartyContainer extends Component {
 
     return (
       <Container id="join" className="fullscreen">
-        <div className="container" id="join-party">
-          <div className="row">
+        <div className=" container" id="join-party">
+          <div className="flex-center row">
             <div className="center" id="join">
               <h3> Room Code: </h3>
               <div className="flex-container">
