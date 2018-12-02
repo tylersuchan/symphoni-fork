@@ -47,7 +47,7 @@ class JoinPartyContainer extends Component {
           </div>
         </div>
         <button
-          className="btn back-btn pl-m"
+          className="btn back-btn pl-m blue-grey darken-2"
           type="button"
           onClick={() => {
             setViewState('HOME');

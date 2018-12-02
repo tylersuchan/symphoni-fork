@@ -5,16 +5,18 @@
   /* padding: 20px; */
   /* padding-left: 10px; */
   /* margin: 10px; */
-  height: 18.2em;
+  height: 17.5em;
   overflow-y: scroll;
   overflow-x: hidden;
   border: none;
-  background-color: #a4b5bb;
+  border-radius: 6px;
+  padding: 1px;
+  background-color: rgba(164, 181, 187, 0.9);
 }
 
 .searchItem {
   width: 100%;
-  /* padding: 10px; */
+
   border-radius: 100px;
   text-align: center;
   color: black;
@@ -39,3 +41,5 @@
 .visible {
   visibility: visible;
 }
+
+/* font-family: "Raleway", sans-serif; */

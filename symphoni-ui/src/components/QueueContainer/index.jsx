@@ -148,7 +148,7 @@ class QueueContainer extends Component {
           </Fragment>
         )}
         <button
-          className="btn queue-back-btn pl-m"
+          className="btn queue-back-btn pl-m blue-grey darken-2"
           type="button"
           onClick={() => {
             setViewState(lastState);
