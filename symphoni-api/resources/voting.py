@@ -54,4 +54,4 @@ class Voting(Resource):
         newlist = sorted(persistence.db[code]["playlist"],key=lambda k: k["vote"], reverse=True)
         persistence.db[code]["playlist"] = newlist
         retval = {'code': code, 'party_data': persistence.db[code]}
-        return retval,201
+        return retval,200

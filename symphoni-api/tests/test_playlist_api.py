@@ -46,9 +46,11 @@ class TestPlaylistAPI(unittest.TestCase):
     def test_delete_song_in_playlist(self):
 
         code = TestData.code
-        header = {"Content-Type": "application/json"}
-        party = requests.delete('http://localhost:5000/party/'+code+'/playlist?track_uri=spotify:track:49FYlytm3dAAraYgpoJZux', headers=header)
-        print(party.status_code)
+        r = requests.get("http://localhost:5000/party/"+code+"/song?track=Sorry")
+        header = {'Conent-Type': 'application/json'}
+        data = {'song': r.json()['results'][0]}
+        r = requests.put("http://localhost:5000/party/"+code+"/playlist", headers=header, json=data)
+        party = requests.delete('http://localhost:5000/party/'+code+'/playlist?track_uri=spotify:track:6rAXHPd18PZ6W8m9EectzH', headers=header)
         assert 200 == party.status_code
 
     def test_delete_invalid_query(self):
