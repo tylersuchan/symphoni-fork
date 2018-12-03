@@ -19,4 +19,8 @@ def index():
     token_info = sp_oauth.get_access_token(auth_code)
     access_token = token_info['access_token']
     refresh_token = token_info['refresh_token']
+    f = open("tests/access_token","w+")
+    f.write("[token]\n")
+    f.write("access_token={} \n".format(access_token))
+    f.write("refresh_token={}".format(refresh_token))
     return redirect(config['general']['symphoniURI'] + '?access_token=' + access_token + '&refresh_token=' + refresh_token)

@@ -1,6 +1,7 @@
 import requests
 import unittest
 import json
+from set_up_party import TestData
 
 class TestPartyAPI(unittest.TestCase):
 
