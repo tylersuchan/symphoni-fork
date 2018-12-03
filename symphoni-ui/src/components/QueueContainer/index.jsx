@@ -4,6 +4,7 @@ import Container from '../Util/Container';
 import Login from '../Login';
 import SpotifyPlayer from '../SpotifyPlayer';
 import SpotifySearch from '../SpotifySearch';
+import VotingButtons from './VotingButtons';
 import config from '../../config';
 
 class QueueContainer extends Component {
@@ -49,7 +50,7 @@ class QueueContainer extends Component {
 
   render() {
     const { accessToken, playlist, playerIsReady } = this.state;
-    const { partyCode, partyName } = this.props;
+    const { partyCode, partyName, username } = this.props;
 
     const playerProps = {
       partyCode,
@@ -71,10 +72,13 @@ class QueueContainer extends Component {
             alt={song.song.album_information.album_name}
           />
         </div>
-        <div className="col s8 max-height valign-wrapper">
+        <div className="col s6 max-height valign-wrapper">
           <div className="col s4">{song.song.track}</div>
           <div className="col s4">{song.song.artist_information[0].artist_name}</div>
           <div className="col s4">{song.song.album_information.album_name}</div>
+        </div>
+        <div className="col s2 flex-container">
+          <VotingButtons partyCode={partyCode} username={username} trackURI={song.song.track_uri} />
         </div>
         <div className="col s2">
           <button
@@ -120,16 +124,17 @@ class QueueContainer extends Component {
             </div>
             <div className="row grey lighten-2 p-s">
               <div className="row mt-xxs mb-0">
-                <div className="offset-s2 col s10">
-                  <div className="col s4">
-                    <b>Title</b>
-                  </div>
-                  <div className="col s4">
-                    <b>Artist</b>
-                  </div>
-                  <div className="col s4">
-                    <b>Album</b>
-                  </div>
+                <div className="offset-s2 col s2">
+                  <b>Title</b>
+                </div>
+                <div className="col s2">
+                  <b>Artist</b>
+                </div>
+                <div className="col s2">
+                  <b>Album</b>
+                </div>
+                <div className="col s2 center">
+                  <b>Votes</b>
                 </div>
               </div>
               <div className="row">{songs}</div>

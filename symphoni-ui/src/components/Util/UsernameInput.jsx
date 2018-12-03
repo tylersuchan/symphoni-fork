@@ -10,7 +10,7 @@ class UsernameInput extends Component {
   addUserToParty = (event) => {
     const { key } = event;
     const { value } = event.target;
-    const { partyCode } = this.props;
+    const { partyCode, setUsername } = this.props;
     if (key === 'Enter') {
       const url = new URL(`${config.url}party/${partyCode}/user`);
       url.search = new URLSearchParams({ username: value });
@@ -19,6 +19,7 @@ class UsernameInput extends Component {
         method: 'PUT',
       }).then(response => response.json().then((data) => {
         if (response.ok) {
+          setUsername(value);
           window.Materialize.toast('Username added to party successfuly.', 4000);
         } else if (data.message === 'User already exists please specify new username') {
           window.Materialize.toast(
