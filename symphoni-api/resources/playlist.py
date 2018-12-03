@@ -33,7 +33,10 @@ class Playlist(Resource):
 
         playlist_item = {
             "song": song,
-            "vote": 0
+            "vote": 0,
+            #new field - keeps track of what user voted for this song so one user can't vote multiple times
+            #Will be a list of dictionaries. Key is user, value is "up" or "down" -T.S. 11/29/2018
+            "user_votes": []
         }
 
         persistence.db[code]["playlist"].append(playlist_item)
@@ -57,4 +60,4 @@ class Playlist(Resource):
         persistence.db[code]["playlist"][:] = [song for song in persistence.db[code]
                                                ["playlist"] if song.get("song").get("track_uri") != args["track_uri"]]
 
-        return {'code': code, 'party_data': persistence.db[code]}, 202
+        return {'code': code, 'party_data': persistence.db[code]}, 200

@@ -12,6 +12,7 @@ class App extends Component {
     this.state = {
       partyCode: localStorage.getItem('partyCode'),
       partyName: localStorage.getItem('partyName'),
+      username: localStorage.getItem('username'),
       isHost: false,
     };
   }
@@ -32,12 +33,20 @@ class App extends Component {
   }
 
   render() {
-    const { partyName, partyCode, isHost } = this.state;
+    const {
+      partyName, partyCode, isHost, username,
+    } = this.state;
 
     const queueProps = {
       partyCode,
       partyName,
       isHost,
+      username,
+    };
+
+    const setUsername = (newUsername) => {
+      this.setState({ username: newUsername });
+      localStorage.setItem('username', newUsername);
     };
 
     return (
@@ -55,8 +64,9 @@ class App extends Component {
           isHost={() => {
             this.setState({ isHost: !isHost });
           }}
+          setUsername={setUsername}
         />
-        <JoinPartyContainer setParty={this.changePartyCode} />
+        <JoinPartyContainer setParty={this.changePartyCode} setUsername={setUsername} />
         <QueueContainer {...queueProps} />
         <FooterComponent />
       </div>

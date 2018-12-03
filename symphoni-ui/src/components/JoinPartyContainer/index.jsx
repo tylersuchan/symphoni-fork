@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './JoinPartyContainer.css';
 import PropTypes from 'prop-types';
 import Container from '../Util/Container';
+import UsernameInput from '../Util/UsernameInput';
 import PartyCodeInput from './PartyCodeInput';
 
 class JoinPartyContainer extends Component {
@@ -13,6 +14,8 @@ class JoinPartyContainer extends Component {
   }
 
   render() {
+    const { setUsername } = this.props;
+
     return (
       <Container id="join" className="page-header">
         <div className="container" id="join-party">
@@ -28,12 +31,15 @@ class JoinPartyContainer extends Component {
                     }}
                     changePartyStatus={(code) => {
                       const { setParty } = this.props;
-                      setParty(code);
+                      this.partyCode = code;
+                      setParty(this.partyCode);
                     }}
                   >
                     {/* Checks if code is correct in child, if it is, pops up a success toast */}
                     {this.state.codeFound === true
-                      && window.Materialize.toast('Success! Proceeding to Queue', 4000)}
+                      && window.Materialize.toast('Success! Proceeding to Queue', 4000) && (
+                        <UsernameInput setUsername={setUsername} partyCode={this.partyCode} />
+                    )}
 
                     {this.state.codeFound === false
                       && window.Materialize.toast('Error Incorrect Input! Please Try Again', 4000)}
