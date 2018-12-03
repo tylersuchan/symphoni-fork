@@ -11,8 +11,15 @@ class Container extends Component {
 
   render() {
     const { children, id, className } = this.props;
+
+    // Styling grandparent with transform allowed grandchild to be moved relative to grandparent as long as the child has a fixed positioning
+    const gpStyle = {
+      position: 'relative',
+      transform: 'rotate(0deg)',
+    };
+
     return (
-      <div className={`container scrollspy ${className}`} id={id}>
+      <div className={`container scrollspy ${className}`} id={id} style={gpStyle}>
         <div className="row">{children}</div>
       </div>
     );

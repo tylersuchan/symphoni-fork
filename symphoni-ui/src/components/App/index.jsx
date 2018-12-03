@@ -9,9 +9,18 @@ import config from '../../config';
 class App extends Component {
   constructor(props) {
     super(props);
+
+    this.validStates = ['HOME', 'START', 'JOIN', 'QUEUE'];
+
+    const allStates = localStorage.getItem('allStates');
+    if (allStates === null) {
+      localStorage.setItem('allStates', JSON.stringify(['HOME']));
+    }
+
     this.state = {
       partyCode: localStorage.getItem('partyCode'),
       partyName: localStorage.getItem('partyName'),
+      allStates: JSON.parse(localStorage.getItem('allStates')),
       isHost: false,
     };
   }
@@ -32,32 +41,63 @@ class App extends Component {
   }
 
   render() {
-    const { partyName, partyCode, isHost } = this.state;
+    const {
+      partyName, partyCode, isHost, allStates,
+    } = this.state;
+
+    const setViewState = (newState) => {
+      const newAllStates = allStates.slice();
+      newAllStates.push(newState);
+
+      if (this.validStates.includes(newState)) {
+        this.setState({ allStates: newAllStates });
+        localStorage.setItem('allStates', JSON.stringify(newAllStates));
+      }
+    };
+
+    const startPartyContainerProps = {
+      setPartyCode: (newPartyCode) => {
+        this.setState({ partyCode: newPartyCode });
+        localStorage.setItem('partyCode', newPartyCode);
+      },
+      setPartyName: (newPartyName) => {
+        this.setState({ partyName: newPartyName });
+        localStorage.setItem('partyName', newPartyName);
+      },
+      setViewState,
+    };
+
+    const joinPartyContainerProps = {
+      setPartyCode: (newPartyCode) => {
+        this.setState({ partyCode: newPartyCode });
+        localStorage.setItem('partyCode', newPartyCode);
+      },
+      setViewState,
+    };
 
     const queueProps = {
       partyCode,
       partyName,
       isHost,
+      setViewState,
+      allStates,
     };
 
     return (
       <div>
-        <HomeContainer />
-        <StartPartyContainer
-          setPartyCode={(newPartyCode) => {
-            this.setState({ partyCode: newPartyCode });
-            localStorage.setItem('partyCode', newPartyCode);
-          }}
-          setPartyName={(newPartyName) => {
-            this.setState({ partyName: newPartyName });
-            localStorage.setItem('partyName', newPartyName);
-          }}
-          isHost={() => {
-            this.setState({ isHost: !isHost });
-          }}
-        />
-        <JoinPartyContainer setParty={this.changePartyCode} />
-        <QueueContainer {...queueProps} />
+        {(() => {
+          switch (allStates[allStates.length - 1]) {
+            case 'HOME':
+              return <HomeContainer setViewState={setViewState} />;
+            case 'START':
+              return <StartPartyContainer {...startPartyContainerProps} />;
+            case 'JOIN':
+              return <JoinPartyContainer {...joinPartyContainerProps} />;
+            case 'QUEUE':
+              return <QueueContainer {...queueProps} />;
+            default:
+          }
+        })()}
         <FooterComponent />
       </div>
     );

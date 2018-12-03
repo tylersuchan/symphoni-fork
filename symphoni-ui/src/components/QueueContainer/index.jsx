@@ -4,6 +4,7 @@ import Container from '../Util/Container';
 import Login from '../Login';
 import SpotifyPlayer from '../SpotifyPlayer';
 import SpotifySearch from '../SpotifySearch';
+import './QueueContainer.css';
 import config from '../../config';
 
 class QueueContainer extends Component {
@@ -49,7 +50,9 @@ class QueueContainer extends Component {
 
   render() {
     const { accessToken, playlist, playerIsReady } = this.state;
-    const { partyCode, partyName } = this.props;
+    const {
+      partyCode, partyName, isHost, setViewState, allStates,
+    } = this.props;
 
     const playerProps = {
       partyCode,
@@ -94,59 +97,78 @@ class QueueContainer extends Component {
       this.setState({ accessToken: newAccessToken });
     };
 
+    const lastState = allStates[allStates.length - 2];
+
     return (
-      <Container id="queue" className="page-header">
+      <div className="queue-container">
         {!accessToken && (
           <Fragment>
-            <Login partyCode={partyCode} setAccessToken={setAccessToken} />
+            <Container id="queue" className="fullscreen">
+              <Login partyCode={partyCode} setAccessToken={setAccessToken} />
+            </Container>
           </Fragment>
         )}
         {accessToken && (
           <Fragment>
-            <div className="row grey lighten-3">
-              <div className="col s4">
-                <SpotifySearch
-                  partyCode={partyCode}
-                  updatePlaylist={this.updatePlaylist}
-                  setAccessToken={setAccessToken}
-                />
-              </div>
-              <div className="col s4 center">
-                <h5>{`${partyName}'s Playlist`}</h5>
-              </div>
-              <div className="col s4">
-                <h5>{`Party Code: ${partyCode}`}</h5>
-              </div>
-            </div>
-            <div className="row grey lighten-2 p-s">
-              <div className="row mt-xxs mb-0">
-                <div className="offset-s2 col s10">
-                  <div className="col s4">
-                    <b>Title</b>
-                  </div>
-                  <div className="col s4">
-                    <b>Artist</b>
-                  </div>
-                  <div className="col s4">
-                    <b>Album</b>
-                  </div>
+            <Container id="queue" className="fullscreen">
+              <div className="row grey lighten-3">
+                <div className="col s4">
+                  <SpotifySearch
+                    partyCode={partyCode}
+                    updatePlaylist={this.updatePlaylist}
+                    setAccessToken={setAccessToken}
+                  />
+                </div>
+                <div className="col s4 center">
+                  <h5>{`${partyName}'s Playlist`}</h5>
+                </div>
+                <div className="col s4">
+                  <h5>{`Party Code: ${partyCode}`}</h5>
                 </div>
               </div>
-              <div className="row">{songs}</div>
-            </div>
+              <div className="row grey lighten-2 p-s">
+                <div className="row mt-xxs mb-0">
+                  <div className="offset-s2 col s10">
+                    <div className="col s4">
+                      <b>Title</b>
+                    </div>
+                    <div className="col s4">
+                      <b>Artist</b>
+                    </div>
+                    <div className="col s4">
+                      <b>Album</b>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">{songs}</div>
+              </div>
 
-            <SpotifyPlayer {...playerProps} />
+              <SpotifyPlayer {...playerProps} />
+            </Container>
           </Fragment>
         )}
-      </Container>
+        <button
+          className="btn queue-back-btn pl-m blue-grey darken-2"
+          type="button"
+          onClick={() => {
+            setViewState(lastState);
+          }}
+        >
+          <i className="material-icons back-arrow">arrow_back</i>
+          Go back to
+          {lastState === 'JOIN' ? ' JOIN' : ' START'}
+        </button>
+      </div>
     );
   }
 }
 
 QueueContainer.propTypes = {
-  partyCode: PropTypes.string,
-  partyName: PropTypes.string,
-  isHost: PropTypes.bool,
+  partyCode: PropTypes.string.isRequired,
+  partyName: PropTypes.string.isRequired,
+  isHost: PropTypes.bool.isRequired,
+  setViewState: PropTypes.func.isRequired,
+  allStates: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default QueueContainer;

@@ -15,6 +15,7 @@ class SpotifyPlayer extends Component {
       loadingBarPosition: {
         width: '0%',
       },
+      playing: false,
     };
   }
 
@@ -127,7 +128,11 @@ class SpotifyPlayer extends Component {
 
   render() {
     const {
-      nowPlayingData, loadingBarPosition, songCurrentTime, songTotalTime,
+      nowPlayingData,
+      loadingBarPosition,
+      songCurrentTime,
+      songTotalTime,
+      playing,
     } = this.state;
     const { playlist } = this.props;
 
@@ -135,11 +140,11 @@ class SpotifyPlayer extends Component {
       <div>
         {nowPlayingData && <NowPlaying nowPlayingData={nowPlayingData} />}
 
-        <div className="row">
-          <div className="col s6 offset-s4">
+        <div className="row flex-container">
+          <div className="flex-horizontal-center">
             <button
               type="button"
-              className="btn"
+              className="btn blue-grey"
               onClick={() => {
                 if (this.player) this.player.previousTrack();
               }}
@@ -148,7 +153,7 @@ class SpotifyPlayer extends Component {
             </button>
             <button
               type="button"
-              className="btn"
+              className="btn blue-grey"
               onClick={() => {
                 this.player.getCurrentState().then((state) => {
                   if (!state && playlist.length > 0) {
@@ -159,14 +164,19 @@ class SpotifyPlayer extends Component {
                   } else {
                     this.player.pause();
                   }
+                  this.setState({ playing: !playing });
                 });
               }}
             >
-              <i className="material-icons">play_circle_filled</i>
+              {playing ? (
+                <i className="material-icons">pause</i>
+              ) : (
+                <i className="material-icons">play_arrow</i>
+              )}
             </button>
             <button
               type="button"
-              className="btn"
+              className="btn blue-grey "
               onClick={() => {
                 if (this.player) this.player.nextTrack();
               }}
@@ -180,8 +190,8 @@ class SpotifyPlayer extends Component {
             <div className="center">
               <div className="col s2">{songCurrentTime}</div>
               <div className="col s8">
-                <div className="progress">
-                  <div className="determinate" style={{ width: loadingBarPosition }} />
+                <div className="progress grey lighten-2">
+                  <div className="determinate light-blue" style={{ width: loadingBarPosition }} />
                 </div>
               </div>
               <div className="col s2">{songTotalTime}</div>

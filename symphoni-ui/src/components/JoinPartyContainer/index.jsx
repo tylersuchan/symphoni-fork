@@ -13,10 +13,13 @@ class JoinPartyContainer extends Component {
   }
 
   render() {
+    const { codeFound } = this.state;
+    const { setPartyCode, setViewState } = this.props;
+
     return (
-      <Container id="join" className="page-header">
-        <div className="container" id="join-party">
-          <div className="row">
+      <Container id="join" className="fullscreen">
+        <div className=" container" id="join-party">
+          <div className="flex-center row">
             <div className="center" id="join">
               <h3> Room Code: </h3>
               <div className="flex-container">
@@ -27,15 +30,15 @@ class JoinPartyContainer extends Component {
                       this.setState({ codeFound: status });
                     }}
                     changePartyStatus={(code) => {
-                      const { setParty } = this.props;
-                      setParty(code);
+                      setPartyCode(code);
                     }}
                   >
                     {/* Checks if code is correct in child, if it is, pops up a success toast */}
-                    {this.state.codeFound === true
-                      && window.Materialize.toast('Success! Proceeding to Queue', 4000)}
+                    {codeFound === true
+                      && window.Materialize.toast('Success! Proceeding to Queue', 4000)
+                      && setViewState('QUEUE')}
 
-                    {this.state.codeFound === false
+                    {codeFound === false
                       && window.Materialize.toast('Error Incorrect Input! Please Try Again', 4000)}
                   </PartyCodeInput>
                 </div>
@@ -43,13 +46,24 @@ class JoinPartyContainer extends Component {
             </div>
           </div>
         </div>
+        <button
+          className="btn back-btn pl-m blue-grey darken-2"
+          type="button"
+          onClick={() => {
+            setViewState('HOME');
+          }}
+        >
+          <i className="material-icons back-arrow">arrow_back</i>
+          Go back to selection
+        </button>
       </Container>
     );
   }
 }
 
 JoinPartyContainer.propTypes = {
-  setParty: PropTypes.func.isRequired,
+  setPartyCode: PropTypes.func.isRequired,
+  setViewState: PropTypes.func.isRequired,
 };
 
 export default JoinPartyContainer;

@@ -1,0 +1,34 @@
+.centerList {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  padding: 20px 2em 20px 2em !important;
+  height: 20em;
+  overflow-y: scroll;
+  background-color: rgba(164, 181, 187, 0.9);
+}
+
+.searchItem {
+  width: 100%;
+  border-radius: 100px;
+  color: black;
+  background-color: #e8e8e8;
+}
+
+.searchItem:hover {
+  background-color: #546e7a;
+  color: white;
+}
+
+.typeSearch {
+  border-bottom: 1px solid #546e7a !important;
+  box-shadow: 0 1px 0 0 #546e7a !important;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.visible {
+  visibility: visible;
+}
