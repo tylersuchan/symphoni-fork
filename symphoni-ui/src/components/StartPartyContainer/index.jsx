@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Container from '../Util/Container';
 import UsernameInput from '../Util/UsernameInput';
 import config from '../../config';
+import './StartPartyContainer.css';
 
 class StartPartyContainer extends Component {
   constructor(props) {
@@ -17,14 +18,20 @@ class StartPartyContainer extends Component {
       fetch(partyURI, {
         method: 'PUT',
       }).then(response => response.json().then((data) => {
-        const { setPartyCode, setPartyName, isHost } = this.props;
+        const { setPartyCode, setPartyName, setViewState } = this.props;
+
         if (response.ok) {
           this.partyCode = data.code;
           setPartyCode(this.partyCode);
           setPartyName(data.party_data.name);
-          isHost();
+          // toggleIsHost();
           window.Materialize.toast('Party created successfully!', 4000);
           this.setState({ partyCreated: true });
+        } else {
+          window.Materialize.toast(
+            'There was an error creating your party. Please try again.',
+            4000,
+          );
         }
       }));
     }
@@ -32,10 +39,10 @@ class StartPartyContainer extends Component {
 
   render() {
     const { partyCreated } = this.state;
-    const { setUsername } = this.props;
+    const { setViewState, setUsername } = this.props;
 
     return (
-      <Container id="start" className="page-header">
+      <Container id="start" className="fullscreen">
         {!partyCreated && (
           <Fragment>
             <div className="center" id="start-party">
@@ -52,7 +59,23 @@ class StartPartyContainer extends Component {
             </div>
           </Fragment>
         )}
-        {partyCreated && <UsernameInput setUsername={setUsername} partyCode={this.partyCode} />}
+        {partyCreated && (
+          <UsernameInput
+            setUsername={setUsername}
+            partyCode={this.partyCode}
+            setViewState={setViewState}
+          />
+        )}
+        <button
+          className="btn back-btn pl-m blue-grey darken-2"
+          type="button"
+          onClick={() => {
+            setViewState('HOME');
+          }}
+        >
+          <i className="material-icons back-arrow">arrow_back</i>
+          Go back to selection
+        </button>
       </Container>
     );
   }
@@ -63,6 +86,7 @@ StartPartyContainer.propTypes = {
   setPartyName: PropTypes.func.isRequired,
   isHost: PropTypes.func.isRequired,
   setUsername: PropTypes.func.isRequired,
+  setViewState: PropTypes.func.isRequired,
 };
 
 export default StartPartyContainer;

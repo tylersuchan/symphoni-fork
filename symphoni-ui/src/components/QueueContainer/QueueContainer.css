@@ -27,3 +27,17 @@
 :local(.no-vote-count) {
   color: black;
 }
+
+:local(.queue-entry) {
+  height: 48px;
+}
+
+:local(div.queue-container) {
+  position: relative;
+}
+
+:local(button.queue-back-btn) {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+}
