@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import style from './QueueContainer.css';
 import config from '../../config';
 
@@ -12,7 +13,38 @@ class VotingButtons extends Component {
     this.getVoteData();
   }
 
-  getVoteData = () => {};
+  decideVoteStatus = (upvotes, downvotes) => {
+    const { username } = this.props;
+
+    const userInUpvotes = upvotes.includes(username);
+    const userInDownvotes = downvotes.includes(username);
+
+    if (userInUpvotes) {
+      return 'up';
+    }
+
+    if (userInDownvotes) {
+      return 'down';
+    }
+
+    return '';
+  };
+
+  getVoteData = () => {
+    const { partyCode, trackURI } = this.props;
+    const url = new URL(`${config.url}party/${partyCode}/vote`);
+    url.search = new URLSearchParams({ track_uri: trackURI });
+
+    fetch(url, {
+      method: 'GET',
+    }).then(response => response.json().then((data) => {
+      if (response.ok) {
+        const voteData = data.vote_data;
+        const newVoteStatus = this.decideVoteStatus(voteData.upvotes, voteData.downvotes);
+        this.setState({ voteStatus: newVoteStatus, voteCount: voteData.votes });
+      }
+    }));
+  };
 
   registerVote = (vote) => {
     const { partyCode, username, trackURI } = this.props;
@@ -23,10 +55,9 @@ class VotingButtons extends Component {
       method: 'PUT',
     }).then(response => response.json().then((data) => {
       if (response.ok) {
-        const votedSong = data.party_data.playlist.find(song => song.song.track_uri === trackURI);
-        this.setState({ voteStatus: vote, voteCount: votedSong.vote });
-      } else if (data.message === 'A user can only vote on song once') {
-        window.Materialize.toast('You can only vote once on a track.', 2000);
+        const voteData = data.vote_data;
+        const newVoteStatus = this.decideVoteStatus(voteData.upvotes, voteData.downvotes);
+        this.setState({ voteStatus: newVoteStatus, voteCount: voteData.votes });
       }
     }));
   };
@@ -72,5 +103,11 @@ class VotingButtons extends Component {
     );
   }
 }
+
+VotingButtons.propTypes = {
+  partyCode: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+  trackURI: PropTypes.string.isRequired,
+};
 
 export default VotingButtons;

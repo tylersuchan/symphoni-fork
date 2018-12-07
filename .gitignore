@@ -18,6 +18,7 @@ symphoni-api/config.ini
 /symphoni-api/env/*
 
 # python cache
+*.pyc
 symphoni-api/__pycache__
 symphoni-api/resources/__pycache__
 symphoni-ui/Tests/__pycache__
