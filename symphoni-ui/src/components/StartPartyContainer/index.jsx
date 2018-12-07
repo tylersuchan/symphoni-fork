@@ -18,7 +18,7 @@ class StartPartyContainer extends Component {
       fetch(partyURI, {
         method: 'PUT',
       }).then(response => response.json().then((data) => {
-        const { setPartyCode, setPartyName, setViewState } = this.props;
+        const { setPartyCode, setPartyName } = this.props;
 
         if (response.ok) {
           this.partyCode = data.code;
@@ -45,7 +45,7 @@ class StartPartyContainer extends Component {
       <Container id="start" className="fullscreen">
         {!partyCreated && (
           <Fragment>
-            <div className="center" id="start-party">
+            <div className="center">
               <h3> Start Party Here!</h3>
               <h5> Insert Party Name</h5>
             </div>

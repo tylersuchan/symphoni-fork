@@ -9,11 +9,11 @@
 }
 
 :local(.upvote) {
-  color: #ff6d00;
+  color: #0086c4;
 }
 
 :local(.downvote) {
-  color: #01579b;
+  color: #d50000;
 }
 
 /* Used for voting arrows */
@@ -26,14 +26,6 @@
 
 :local(.no-vote-count) {
   color: black;
-}
-
-:local(.queue-entry) {
-  height: 48px;
-}
-
-:local(div.queue-container) {
-  position: relative;
 }
 
 :local(button.queue-back-btn) {

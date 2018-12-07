@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import UserInput from './UserInput';
 import config from '../../config';
 
@@ -56,9 +55,13 @@ class PartyCodeInput extends Component {
         <UserInput idx="3" onChange={this.arrayHandler} onKeyPress={this.checkCode} />
         <UserInput idx="4" onChange={this.arrayHandler} onKeyPress={this.checkCode} />
         <UserInput idx="5" onChange={this.arrayHandler} onKeyPress={this.checkCode} />
-        <a className="waves-effect waves-light btn-small" onClick={this.checkCode}>
+        <button
+          type="button"
+          className="waves-effect waves-light submit-code"
+          onClick={this.checkCode}
+        >
           <i className="material-icons">arrow_drop_down</i>
-        </a>
+        </button>
         {/*
           Current Method of Clearing Values, Needs to Be Implemented :(
          <a className="waves-effect waves-light btn-small" onClick={this.handleClick}>

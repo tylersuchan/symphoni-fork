@@ -22,3 +22,8 @@ input.join::placeholder {
   color: black;
   text-align: center;
 }
+
+.submit-code {
+  border: none;
+  background-color: transparent;
+}

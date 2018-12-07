@@ -19,7 +19,7 @@ class Container extends Component {
     };
 
     return (
-      <div className={`container scrollspy ${className}`} id={id} style={gpStyle}>
+      <div className={`container ${className}`} id={id} style={gpStyle}>
         <div className="row">{children}</div>
       </div>
     );

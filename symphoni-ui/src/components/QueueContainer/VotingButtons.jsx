@@ -47,7 +47,9 @@ class VotingButtons extends Component {
   };
 
   registerVote = (vote) => {
-    const { partyCode, username, trackURI } = this.props;
+    const {
+      partyCode, username, trackURI, setPlayList,
+    } = this.props;
     const url = new URL(`${config.url}party/${partyCode}/vote`);
     url.search = new URLSearchParams({ vote, user: username, track_uri: trackURI });
 
@@ -58,6 +60,7 @@ class VotingButtons extends Component {
         const voteData = data.vote_data;
         const newVoteStatus = this.decideVoteStatus(voteData.upvotes, voteData.downvotes);
         this.setState({ voteStatus: newVoteStatus, voteCount: voteData.votes });
+        setPlayList(data.playlist);
       }
     }));
   };

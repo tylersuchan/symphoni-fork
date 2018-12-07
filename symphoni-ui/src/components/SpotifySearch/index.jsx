@@ -52,8 +52,8 @@ class SpotifySearch extends Component {
       <li key={result.track_uri}>
         <div className="row">
           <button
-            type="button flex-container"
-            className="flex-horizontal-center btn searchItem"
+            type="button"
+            className="btn searchItem"
             onClick={() => {
               this.addSongToPlaylist(result);
               this.setState({ results: [] });

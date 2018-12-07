@@ -62,7 +62,7 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  partyCode: PropTypes.string,
+  partyCode: PropTypes.string.isRequired,
   setAccessToken: PropTypes.func.isRequired,
 };
 

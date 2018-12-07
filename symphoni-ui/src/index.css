@@ -30,6 +30,7 @@ img {
   display: -ms-flexbox;
   display: flex;
   overflow: hidden;
+  flex-wrap: wrap;
 }
 
 .flex-horizontal-center {

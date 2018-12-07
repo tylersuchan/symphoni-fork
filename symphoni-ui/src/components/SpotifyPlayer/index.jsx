@@ -68,6 +68,7 @@ class SpotifyPlayer extends Component {
     const {
       accessToken, volume, name, playerIsReady, partyCode,
     } = this.props;
+
     const playerOptions = {
       name,
       getOAuthToken: (cb) => {
@@ -75,6 +76,7 @@ class SpotifyPlayer extends Component {
       },
       volume,
     };
+
     const player = new window.Spotify.Player(playerOptions);
     this.player = player;
 
@@ -94,12 +96,11 @@ class SpotifyPlayer extends Component {
     });
 
     player.on('authentication_error', () => {
-      const { setAccessToken } = this.props;
       const url = `${config.url}token/${partyCode}`;
       fetch(url, {
         method: 'GET',
       }).then(response => response.json().then((data) => {
-        setAccessToken();
+        console.log('Token invalid');
       }));
       localStorage.clear();
     });
@@ -140,7 +141,7 @@ class SpotifyPlayer extends Component {
       <div>
         {nowPlayingData && <NowPlaying nowPlayingData={nowPlayingData} />}
 
-        <div className="row flex-container">
+        <div className="col s12 flex-container">
           <div className="flex-horizontal-center">
             <button
               type="button"
