@@ -13,6 +13,7 @@ symphoni-ui/bower_components
 # configuration files
 symphoni-ui/src/config.js
 symphoni-api/config.ini
+symphoni-api/tests/access_token
 
 # virtual environment
 /symphoni-api/env/*
