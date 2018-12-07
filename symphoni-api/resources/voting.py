@@ -86,15 +86,16 @@ class Voting(Resource):
                 else:
                     matching_song['downvotes'].append(user)
 
-        sortedPlaylist = sorted(
-            party['playlist'], key=lambda k: k['votes'], reverse=True)
         matching_song['votes'] = len(
             matching_song['upvotes']) - len(matching_song['downvotes'])
+        sortedPlaylist = sorted(
+            party['playlist'], key=lambda k: k['votes'], reverse=True)
 
         persistence.db[code]['playlist'] = sortedPlaylist
         retval = {
             'message': "Vote {} for user {} added successfuly.".format(vote, user),
             'code': code,
+            'playlist': persistence.db[code]['playlist'],
             'vote_data': {
                 'upvotes': matching_song['upvotes'],
                 'downvotes': matching_song['downvotes'],
