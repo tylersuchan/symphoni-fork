@@ -15,12 +15,33 @@ class QueueContainer extends Component {
       playlist: [],
       playerIsReady: false,
       accessToken: localStorage.getItem('accessToken'),
+      tokenInterval: setInterval(this.refreshAccessToken, 3500000),
     };
   }
 
   componentWillMount() {
     this.updatePlaylist();
   }
+
+  componentWillUnmount() {
+    const { tokenInterval } = this.state;
+    clearInterval(tokenInterval);
+  }
+
+  refreshAccessToken = () => {
+    const { accessToken } = this.state;
+    if (accessToken) {
+      const { partyCode } = this.props;
+      const url = `${config.url}token/${partyCode}`;
+      fetch(url, {
+        method: 'GET',
+      }).then(response => response.json().then((data) => {
+        if (response.ok) {
+          this.setState({ accessToken: data.access_token });
+        }
+      }));
+    }
+  };
 
   updatePlaylist = () => {
     const { partyCode } = this.props;
@@ -31,6 +52,8 @@ class QueueContainer extends Component {
       }).then(response => response.json().then((data) => {
         if (response.ok) {
           this.setState({ playlist: data.playlist });
+        } else {
+          this.setState({ playlist: [] });
         }
       }));
     }
@@ -52,8 +75,9 @@ class QueueContainer extends Component {
   render() {
     const { accessToken, playlist, playerIsReady } = this.state;
     const {
-      partyCode, partyName, username, isHost, setViewState, allStates,
+      partyCode, partyName, username, setViewState, allStates,
     } = this.props;
+    const lastState = allStates[allStates.length - 2];
 
     const playerProps = {
       partyCode,
@@ -67,21 +91,28 @@ class QueueContainer extends Component {
     };
 
     const songs = playlist.map(song => (
-      <div className={`row ${style['queue-entry']}`} key={song.song.track_uri}>
+      <div className="col s12 card-panel flex-container valign-wrapper" key={song.song.track_uri}>
         <div className="col s2">
           <img
-            className="responsive-img"
+            className="responsive-img valign-wrapper"
             src={song.song.album_information.album_images[0].url}
             alt={song.song.album_information.album_name}
           />
         </div>
-        <div className="col s6 max-height valign-wrapper">
-          <div className="col s4">{song.song.track}</div>
-          <div className="col s4">{song.song.artist_information[0].artist_name}</div>
-          <div className="col s4">{song.song.album_information.album_name}</div>
+        <div className="col s6 max-height">
+          <div className="col s4 truncate">{song.song.track}</div>
+          <div className="col s4 truncate">{song.song.artist_information[0].artist_name}</div>
+          <div className="col s4 truncate">{song.song.album_information.album_name}</div>
         </div>
         <div className="col s2 flex-container">
-          <VotingButtons partyCode={partyCode} username={username} trackURI={song.song.track_uri} />
+          <VotingButtons
+            setPlayList={(newPlayList) => {
+              this.setState({ playlist: newPlayList });
+            }}
+            partyCode={partyCode}
+            username={username}
+            trackURI={song.song.track_uri}
+          />
         </div>
         <div className="col s2">
           <button
@@ -96,42 +127,35 @@ class QueueContainer extends Component {
       </div>
     ));
 
-    const setAccessToken = (newAccessToken) => {
-      localStorage.setItem('accessToken', newAccessToken);
-      this.setState({ accessToken: newAccessToken });
-    };
-
-    const lastState = allStates[allStates.length - 2];
-
     return (
-      <div className={style['queue-container']}>
+      <div>
         {!accessToken && (
           <Fragment>
             <Container id="queue" className="fullscreen">
-              <Login partyCode={partyCode} setAccessToken={setAccessToken} />
+              <Login
+                partyCode={partyCode}
+                setAccessToken={(newAccessToken) => {
+                  localStorage.setItem('accessToken', newAccessToken);
+                  this.setState({ accessToken: newAccessToken });
+                }}
+              />
             </Container>
           </Fragment>
         )}
         {accessToken && (
           <Fragment>
-            <Container id="queue" className="fullscreen">
-              <div className="row grey lighten-3">
-                <div className="col s4">
-                  <SpotifySearch
-                    partyCode={partyCode}
-                    updatePlaylist={this.updatePlaylist}
-                    setAccessToken={setAccessToken}
-                  />
-                </div>
-                <div className="col s4 center">
-                  <h5>{`${partyName}'s Playlist`}</h5>
-                </div>
-                <div className="col s4">
-                  <h5>{`Party Code: ${partyCode}`}</h5>
-                </div>
+            <Container id="queue" className="fullscreen grey lighten-3">
+              <div className="col s4">
+                <SpotifySearch partyCode={partyCode} updatePlaylist={this.updatePlaylist} />
               </div>
-              <div className="row grey lighten-2 p-s">
-                <div className="row mt-xxs mb-0">
+              <div className="col s4 center">
+                <h5>{`${partyName}'s Playlist`}</h5>
+              </div>
+              <div className="col s4">
+                <h5>{`Party Code: ${partyCode}`}</h5>
+              </div>
+              <div className="col s12 grey lighten-2 p-s">
+                <div className="mt-xxs mb-0">
                   <div className="offset-s2 col s2">
                     <b>Title</b>
                   </div>
@@ -143,6 +167,9 @@ class QueueContainer extends Component {
                   </div>
                   <div className="col s2 center">
                     <b>Votes</b>
+                  </div>
+                  <div className="col s2">
+                    <b>Delete Song</b>
                   </div>
                 </div>
                 <div className="row">{songs}</div>
