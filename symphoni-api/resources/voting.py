@@ -6,6 +6,28 @@ import json
 
 
 class Voting(Resource):
+    def get(self, code):
+        if not code in persistence.db:
+            abort(404, message="Code {} doesn't exist".format(code))
+
+        parser = reqparse.RequestParser()
+        parser.add_argument('track_uri', type=str,
+                            location='args', required=True)
+        parser.add_argument('user', type=str, location='args', required=True)
+
+        try:
+            args = parser.parse_args(strict=True)
+            if args['track_uri'] is None or args['track_uri'] is '':
+                raise Exception('Please specify a valid track_uri')
+            if args['user'] is None or args['user'] is '':
+                raise Exception('Please enter a valid user in the party')
+        except:
+            abort(400, message='Invalid arguments')
+
+        party = persistence.db[code]
+
+        if user in ['users']:
+            pass
 
     def put(self, code):
 
@@ -20,42 +42,53 @@ class Voting(Resource):
 
         try:
             args = parser.parse_args(strict=True)
-            if not(("up" in args["vote"]) or ("down" in args["vote"])):
-                raise Exception("Please specify vote (up or down)")
-            if args['track_uri'] is None or args['track_uri'] is "":
+            if not('up' in args['vote'] or ('down' in args['vote'])):
+                raise Exception('Please specify vote (up or down)')
+            if args['track_uri'] is None or args['track_uri'] is '':
                 raise Exception('Please specify a valid track_uri')
-            if args['user'] is None or args['user'] is "":
+            if args['user'] is None or args['user'] is '':
                 raise Exception('Please enter a valid user in the party')
         except:
-            abort(400, message="Invalid arguments")
+            abort(400, message='Invalid arguments')
 
-        songFound = False
-        userFound = False
+        party = persistence.db[code]
+        user = args['user']
+        vote = args['vote']
+        track_uri = args['track_uri']
+        voted_song = None
 
-        if args['user'] in persistence.db[code]["users"]:  # Checks if user is in party
-            userFound = True
-        else:
-            abort(400, message="The requested user is not in the party")
+        if user in party['users']:
+            for item in party['playlist']:
+                if item['song']['track_uri'] == track_uri:
+                    voted_song = item
+                    if vote == 'up':
+                        if user in item['upvotes']:
+                            item['upvotes'].remove(user)
+                        elif user in item['downvotes']:
+                            item['downvotes'].remove(user)
+                            item['upvotes'].append(user)
+                        else:
+                            item['upvotes'].append(user)
+                    elif vote == 'down':
+                        if user in item['downvotes']:
+                            item['downvotes'].remove(user)
+                        elif user in item['upvotes']:
+                            item['upvotes'].remove(user)
+                            item['downvotes'].append(user)
+                        else:
+                            item['downvotes'].append(user)
+                sortedPlaylist = sorted(
+                    party['playlist'], key=lambda k: k['votes'], reverse=True)
+                item['votes'] = len(item['upvotes']) - len(item['downvotes'])
 
-        for item in persistence.db[code]["playlist"]:
-            if item["song"]["track_uri"] == args["track_uri"]:
-                if userFound:
-                    if args['user'] in item['user_votes']:
-                        abort(400, message="A user can only vote on song once")
-                    else:
-                        item["vote"] = item["vote"] + \
-                            1 if "up" in args["vote"] else item["vote"]-1
-                        #item["user_votes"].append({args['user']:"up"} if "up" in args["vote"] else {args['user']:"down"})
-                        item["user_votes"].append(args['user'])
-                        songFound = True
-                        break
-                else:
-                    abort(404, message="Only users in the party can vote on songs")
-
-        if not songFound:
-            abort(404, message="Song not found in the playlist")
-        newlist = sorted(
-            persistence.db[code]["playlist"], key=lambda k: k["vote"], reverse=True)
-        persistence.db[code]["playlist"] = newlist
-        retval = {'code': code, 'party_data': persistence.db[code]}
+        persistence.db[code]['playlist'] = sortedPlaylist
+        retval = {
+            'message': "Vote {} for user {} added successfuly.".format(vote, user),
+            'code': code,
+            'vote_data': {
+                'upvotes': voted_song['upvotes'],
+                'downvotes': voted_song['downvotes'],
+                'votes': voted_song['votes']
+            }
+        }
         return retval, 200

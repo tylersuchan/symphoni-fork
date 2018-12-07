@@ -33,15 +33,14 @@ class Playlist(Resource):
 
         playlist_item = {
             "song": song,
-            "vote": 0,
-            #new field - keeps track of what user voted for this song so one user can't vote multiple times
-            #Will be a list of dictionaries. Key is user, value is "up" or "down" -T.S. 11/29/2018
-            "user_votes": []
+            "upvotes": [],
+            "downvotes": [],
+            "votes": 0
         }
 
         persistence.db[code]["playlist"].append(playlist_item)
         newlist = sorted(persistence.db[code]["playlist"],
-                         key=lambda k: k["vote"], reverse=True)
+                         key=lambda k: k["votes"], reverse=True)
         persistence.db[code]["playlist"] = newlist
         retval = {'code': code, 'party_data': persistence.db[code]}
         return retval, 201

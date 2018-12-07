@@ -5,7 +5,8 @@ import config from '../../config';
 class VotingButtons extends Component {
   constructor(props) {
     super(props);
-    this.state = { voteStatus: '', voteCount: 0 };
+    this.votes = [];
+    this.state = { voteStatus: [], voteCount: 0 };
   }
 
   componentWillMount() {
@@ -13,6 +14,30 @@ class VotingButtons extends Component {
   }
 
   getVoteData = () => {};
+
+  shrinkVotes = () => {
+    const votesLength = this.votes.length;
+    if (votesLength >= 2 && this.votes[votesLength - 2] === this.votes[votesLength - 1]) {
+      this.votes = [];
+    }
+  };
+
+  decideVoteStatus = () => {
+    const currentVote = this.votes[this.votes.length - 1];
+    const prevVote = this.votes[this.votes.length - 2];
+
+    this.shrinkVotes();
+
+    if (currentVote === prevVote) {
+      return '';
+    }
+
+    if (currentVote === 'up') {
+      return 'up';
+    }
+
+    return 'down';
+  };
 
   registerVote = (vote) => {
     const { partyCode, username, trackURI } = this.props;
@@ -23,10 +48,9 @@ class VotingButtons extends Component {
       method: 'PUT',
     }).then(response => response.json().then((data) => {
       if (response.ok) {
-        const votedSong = data.party_data.playlist.find(song => song.song.track_uri === trackURI);
-        this.setState({ voteStatus: vote, voteCount: votedSong.vote });
-      } else if (data.message === 'A user can only vote on song once') {
-        window.Materialize.toast('You can only vote once on a track.', 2000);
+        this.votes.push(vote);
+        const newVoteStatus = this.decideVoteStatus();
+        this.setState({ voteStatus: newVoteStatus, voteCount: data.vote_data.votes });
       }
     }));
   };
