@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from 'react';
+import { CSSTransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
 import Container from '../Util/Container';
 import Login from '../Login';
@@ -91,7 +92,7 @@ class QueueContainer extends Component {
     };
 
     const songs = playlist.map(song => (
-      <div className="col s12 card-panel flex-container valign-wrapper" key={song.song.track_uri}>
+      <div className="col s12 card-panel valign-wrapper" key={song.song.track_uri}>
         <div className="col s2">
           <img
             className="responsive-img valign-wrapper"
@@ -114,14 +115,15 @@ class QueueContainer extends Component {
             trackURI={song.song.track_uri}
           />
         </div>
-        <div className="col s2">
+        <div className="col s2 center">
           <button
             type="button"
+            className="btn-floating red accent-4 white-text"
             onClick={() => {
               this.deleteFromPlaylist(song.song.track_uri);
             }}
           >
-            DELETE
+            <i className="material-icons">remove</i>
           </button>
         </div>
       </div>
@@ -154,7 +156,7 @@ class QueueContainer extends Component {
               <div className="col s4">
                 <h5>{`Party Code: ${partyCode}`}</h5>
               </div>
-              <div className="col s12 grey lighten-2 p-s">
+              <div className="col s12 grey lighten-2 p-s center">
                 <div className="mt-xxs mb-0">
                   <div className="offset-s2 col s2">
                     <b>Title</b>
@@ -168,11 +170,21 @@ class QueueContainer extends Component {
                   <div className="col s2 center">
                     <b>Votes</b>
                   </div>
-                  <div className="col s2">
-                    <b>Delete Song</b>
-                  </div>
                 </div>
-                <div className="row">{songs}</div>
+              </div>
+              <div className="row">
+                <CSSTransitionGroup
+                  transitionName={{
+                    enter: style['slide-in-enter'],
+                    enterActive: style['slide-in-enter-active'],
+                    leave: style['slide-out-leave'],
+                    leaveActive: style['slide-out-leave-active'],
+                  }}
+                  transitionEnterTimeout={1000}
+                  transitionLeaveTimeout={1000}
+                >
+                  {songs}
+                </CSSTransitionGroup>
               </div>
               <SpotifyPlayer {...playerProps} />
             </Container>
