@@ -39,7 +39,7 @@ class JoinPartyContainer extends Component {
                     <UsernameInput
                       setUsername={setUsername}
                       partyCode={this.partyCode}
-                      setViewState={setViewState}
+                      setViewState={setViewState('QUEUE')}
                     />
                 )}
 
