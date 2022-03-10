@@ -1,0 +1,35 @@
+:local(.vote-btn) {
+  border: none;
+  background-color: transparent;
+}
+
+:local(.vote-btn:focus) {
+  border: none;
+  background-color: transparent;
+}
+
+:local(.upvote) {
+  color: #0086c4;
+}
+
+:local(.downvote) {
+  color: #d50000;
+}
+
+/* Used for voting arrows */
+
+:local(.no-vote) {
+  color: #263238;
+}
+
+/* Used for number in voting */
+
+:local(.no-vote-count) {
+  color: black;
+}
+
+:local(button.queue-back-btn) {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+}
